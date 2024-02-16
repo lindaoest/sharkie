@@ -5,6 +5,12 @@ class World {
 		new Pufferfish(),
 		new Pufferfish()
 	];
+	backgroundObjects = [
+		new BackgroundObject('img/3. Background/Layers/4.Fondo 2/D1.png'),
+		new BackgroundObject('img/3. Background/Layers/3.Fondo 1/D1.png'),
+		new BackgroundObject('./img/3. Background/Layers/2. Floor/D1.png')
+	]
+	water = new Water();
 	canvas;
 	ctx;
 
@@ -17,16 +23,27 @@ class World {
 	draw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		this.ctx.drawImage(this.character.img, this.character.position_x, this.character.position_y, this.character.width, this.character.height); //zeichnet auf das Canvas Board
-		this.enemies.forEach(enemy => {
-			this.ctx.drawImage(enemy.img, enemy.position_x, enemy.position_y, enemy.width, enemy.height)
-		})
+		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
+		this.addToMap(this.water);
+		this.addObjectsToMap(this.backgroundObjects);
+		this.addToMap(this.character);
+		this.addObjectsToMap(this.enemies);
 
-		//wird erst ausgeführt wenn das obere gezeichnet wurde
+		//Wird erst ausgeführt wenn das obere gezeichnet wurde
 		//In dieser Funktion erkennt es das this nicht mehr
 		let self = this;
 		requestAnimationFrame(function() {
 			self.draw();
 		}); //Die function draw wird so oft ausgeführt, wie es die Grafikkarte vom Benutzer hergibt. Z.b. bei schlechter Karte 10-15 Mal pro Sekunde und es geht bis zu 25 oder 60 Mal pro Sekunde (Bilder werden so oft geladen)
+	}
+
+	addObjectsToMap(objects) {
+		objects.forEach(o => {
+			this.addToMap(o)
+		})
+	}
+
+	addToMap(mo) {
+		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
 	}
 }
