@@ -7,5 +7,14 @@ class Pufferfish extends MoveableObject {
 		this.position_y = Math.random() * 400;
 		this.width = 90;
 		this.height = 100;
+
+		this.animate();
+	}
+
+	animate() {
+		setInterval(() => {
+			this.position_x -= 0.15;
+			// this.position_y -= 0.15;
+		}, 1000 / 60);
 	}
 }

@@ -6,11 +6,12 @@ class World {
 		new Pufferfish()
 	];
 	backgroundObjects = [
-		new BackgroundObject('img/3. Background/Layers/4.Fondo 2/D1.png'),
-		new BackgroundObject('img/3. Background/Layers/3.Fondo 1/D1.png'),
+		new BackgroundObject('./img/3. Background/Layers/4.Fondo 2/D1.png'),
+		new BackgroundObject('./img/3. Background/Layers/3.Fondo 1/D1.png'),
 		new BackgroundObject('./img/3. Background/Layers/2. Floor/D1.png')
 	]
 	water = new Water();
+	light = new Light();
 	canvas;
 	ctx;
 
@@ -26,6 +27,7 @@ class World {
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
 		this.addToMap(this.water);
 		this.addObjectsToMap(this.backgroundObjects);
+		this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.enemies);
 
