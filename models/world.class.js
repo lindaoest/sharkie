@@ -15,6 +15,7 @@ class World {
 	canvas;
 	keyboard;
 	ctx;
+	camera_x = 0;
 
 	constructor(canvas, keyboard) {
 		this.ctx = canvas.getContext('2d');
@@ -26,10 +27,13 @@ class World {
 
 	setWorld() {
 		this.character.world = this.keyboard;
+		this.character.camera_x = this.camera_x;
 	}
 
 	draw() {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+		this.ctx.translate(this.camera_x, 0);
 
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
 		this.addToMap(this.water);
@@ -37,6 +41,8 @@ class World {
 		this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.enemies);
+
+		this.ctx.translate(-this.camera_x, 0);
 
 		//Wird erst ausgeführt wenn das obere gezeichnet wurde
 		//In dieser Funktion erkennt es das this nicht mehr
@@ -53,6 +59,16 @@ class World {
 	}
 
 	addToMap(mo) {
+		if(mo.otherDirection) {
+			this.ctx.save(); //Aktuellen status des context speichern
+			this.ctx.translate(mo.width, 0); //dreht das Bild, x und y Achse
+			this.ctx.scale(-1, 1); //Spiegeln die Bilder und drehen sie bei der X-Achse um
+			mo.position_x = mo.position_x * -1;
+		}
 		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
+		if(mo.otherDirection) {
+			mo.position_x = mo.position_x * -1;
+			this.ctx.restore(); //Das Spiegeln wieder rückläufig machen, damit die anderen Bilder nicht auch gespiegelt werden
+		}
 	}
 }
