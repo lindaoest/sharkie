@@ -1,17 +1,9 @@
 class World {
 	character = new Character();
-	enemies = [
-		new Pufferfish(),
-		new Pufferfish(),
-		new Pufferfish()
-	];
-	backgroundObjects = [
-		new BackgroundObject('img/3. Background/Layers/4.Fondo 2/D1.png'),
-		new BackgroundObject('img/3. Background/Layers/3.Fondo 1/D1.png'),
-		new BackgroundObject('img/3. Background/Layers/2. Floor/D1.png')
-	]
-	water = new Water();
-	light = new Light();
+	enemies = level1.enemies;
+	backgroundObjects = level1.backgroundObjects;
+	// water = new Water();
+	// light = new Light();
 	canvas;
 	keyboard;
 	ctx;
@@ -26,8 +18,7 @@ class World {
 	}
 
 	setWorld() {
-		this.character.world = this.keyboard;
-		this.character.camera_x = this.camera_x;
+		this.character.world = this;
 	}
 
 	draw() {
@@ -36,9 +27,9 @@ class World {
 		this.ctx.translate(this.camera_x, 0);
 
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
-		this.addToMap(this.water);
+		// this.addToMap(this.water);
 		this.addObjectsToMap(this.backgroundObjects);
-		this.addToMap(this.light);
+		// this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.enemies);
 
