@@ -19,12 +19,12 @@ class Character extends MoveableObject {
 
 	animate() {
 		setInterval(() => {
-			if(this.world.keyboard.key_right) {
+			if(this.world.keyboard.key_right && this.position_x < this.world.level.level_end_x) {
 				//Change x position
 				this.position_x += 10;
 				this.otherDirection = false;
 			}
-			if(this.world.keyboard.key_left) {
+			if(this.world.keyboard.key_left && this.position_x > 0) {
 				this.position_x -= 10;
 				this.otherDirection = true;
 			}

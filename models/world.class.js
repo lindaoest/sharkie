@@ -1,7 +1,6 @@
 class World {
 	character = new Character();
-	enemies = level1.enemies;
-	backgroundObjects = level1.backgroundObjects;
+	level = level1;
 	// water = new Water();
 	// light = new Light();
 	canvas;
@@ -28,10 +27,10 @@ class World {
 
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
 		// this.addToMap(this.water);
-		this.addObjectsToMap(this.backgroundObjects);
+		this.addObjectsToMap(this.level.backgroundObjects);
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
-		this.addObjectsToMap(this.enemies);
+		this.addObjectsToMap(this.level.enemies);
 
 		this.ctx.translate(-this.camera_x, 0);
 
