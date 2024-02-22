@@ -14,6 +14,7 @@ class World {
 		this.keyboard = keyboard;
 		this.draw();
 		this.setWorld();
+		this.checkCollisions();
 	}
 
 	setWorld() {
@@ -50,15 +51,44 @@ class World {
 
 	addToMap(mo) {
 		if(mo.otherDirection) {
-			this.ctx.save(); //Aktuellen status des context speichern
-			this.ctx.translate(mo.width, 0); //dreht das Bild, x und y Achse
-			this.ctx.scale(-1, 1); //Spiegeln die Bilder und drehen sie bei der X-Achse um
-			mo.position_x = mo.position_x * -1;
+			this.flipImage(mo);
 		}
+
 		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
-		if(mo.otherDirection) {
-			mo.position_x = mo.position_x * -1;
-			this.ctx.restore(); //Das Spiegeln wieder rückläufig machen, damit die anderen Bilder nicht auch gespiegelt werden
+
+		if(mo instanceof Character || mo instanceof Pufferfish) {
+			this.ctx.beginPath();
+			this.ctx.lineWidth = '5';
+			this.ctx.strokeStyle = 'blue';
+			this.ctx.rect(mo.position_x, mo.position_y, mo.width, mo.height);
+			this.ctx.stroke();
 		}
+
+		if(mo.otherDirection) {
+			this.flipImageBack(mo);
+		}
+	}
+
+	flipImage(mo) {
+		this.ctx.save(); //Aktuellen status des context speichern
+		this.ctx.translate(mo.width, 0); //dreht das Bild, x und y Achse
+		this.ctx.scale(-1, 1); //Spiegeln die Bilder und drehen sie bei der X-Achse um
+		mo.position_x = mo.position_x * -1;
+	}
+
+	flipImageBack(mo) {
+		mo.position_x = mo.position_x * -1;
+		this.ctx.restore(); //Das Spiegeln wieder rückläufig machen, damit die anderen Bilder nicht auch gespiegelt werden
+	}
+
+	checkCollisions() {
+		setInterval(() => {
+			this.level.enemies.forEach((enemy) => {
+				if(this.character.isColliding(enemy)) {
+					console.log('Collision', enemy);
+					this.character.energy -= 5;
+				}
+			})
+		}, 1000);
 	}
 }

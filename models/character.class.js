@@ -7,6 +7,12 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/3.Swim/5.png',
 		'img/1.Sharkie/3.Swim/6.png',
 	];
+	IMAGES_HITTINGPUFFERFISH = [
+		'img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+		'img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+		'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+		'img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
+	];
 	currentImage = 0;
 	world;
 	swimming_sound = new Audio('audio/swim.mp3');
