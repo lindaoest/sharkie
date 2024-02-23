@@ -8,7 +8,6 @@ class MoveableObject {
 	speed = 0.15;
 	otherDirection = false;
 	energy = 100;
-	isDead = false;
 	hitted_by_pufferfish = false;
 
 	loadImage(path) {
@@ -51,5 +50,17 @@ class MoveableObject {
 				this.position_x <= obj.position_x &&
 				this.position_y + this.height >= obj.position_y &&
 				this.position_y <= obj.position_y + obj.height
+	}
+
+	hit() {
+		this.energy -= 5;
+		// console.log('Collision', this.energy);
+		if(this.energy < 0) {
+			this.energy = 0;
+		}
+	}
+
+	isDead() {
+		return this.energy == 0;
 	}
 }

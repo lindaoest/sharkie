@@ -1,5 +1,9 @@
 class World {
 	character = new Character();
+	poisons = [
+		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100),
+	];
 	level = level1;
 	// water = new Water();
 	// light = new Light();
@@ -32,6 +36,8 @@ class World {
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.level.coins);
+		this.addObjectsToMap(this.poisons);
 
 		this.ctx.translate(-this.camera_x, 0);
 
@@ -85,8 +91,8 @@ class World {
 		setInterval(() => {
 			this.level.enemies.forEach((enemy) => {
 				if(this.character.isColliding(enemy)) {
-					console.log('Collision', enemy);
-					this.character.energy -= 5;
+					//console.log('Collision', enemy);
+					this.character.hit();
 				}
 			})
 		}, 1000);
