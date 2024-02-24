@@ -27,7 +27,6 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/6.dead/1.Poisoned/11.png',
 		'img/1.Sharkie/6.dead/1.Poisoned/12.png',
 	];
-	currentImage = 0;
 	world;
 	swimming_sound = new Audio('audio/swim.mp3');
 
@@ -35,6 +34,7 @@ class Character extends MoveableObject {
 		super().loadImage('img/1.Sharkie/1.IDLE/1.png');
 		this.loadImages(this.IMAGES_SWIMMING);
 		this.loadImages(this.IMAGES_DEAD);
+		this.loadImages(this.IMAGES_HITTINGPUFFERFISH);
 		this.height = 300;
 
 		this.animate();
@@ -70,6 +70,8 @@ class Character extends MoveableObject {
 			if(this.isDead()) {
 				//Dead Animation
 				this.playAnimation(this.IMAGES_DEAD);
+			} else if(this.isHurt()) {
+				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH);
 			} else {
 				if(this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down) {
 					//Swim Animation
@@ -78,22 +80,4 @@ class Character extends MoveableObject {
 			}
 		}, 100);
 	}
-
-	playAnimation(img) {
-		let i = this.currentImage % img.length;
-		let path = img[i];
-		this.img = this.imageCache[path];
-		this.currentImage++;
-	}
-
-	// collision_pufferfish() {
-	// 	setInterval(() => {
-	// 		if(this.hitted_by_pufferfish) {
-	// 			let i = this.currentImage % this.IMAGES_HITTINGPUFFERFISH.length;
-	// 			let path = this.IMAGES_HITTINGPUFFERFISH[i];
-	// 			this.img = this.imageCache[path];
-	// 			this.currentImage++;
-	// 		}
-	// 	}, 200);
-	// }
 }

@@ -4,6 +4,7 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
 		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100),
 	];
+	statusbar = new Statusbar('img/4. Marcadores/green/Coin/0_  copia 4.png', 40, 10);
 	level = level1;
 	// water = new Water();
 	// light = new Light();
@@ -23,6 +24,7 @@ class World {
 
 	setWorld() {
 		this.character.world = this;
+		this.statusbar.world = this;
 	}
 
 	draw() {
@@ -33,6 +35,7 @@ class World {
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
 		// this.addToMap(this.water);
 		this.addObjectsToMap(this.level.backgroundObjects);
+		this.addToMap(this.statusbar);
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.level.enemies);
@@ -93,6 +96,7 @@ class World {
 				if(this.character.isColliding(enemy)) {
 					//console.log('Collision', enemy);
 					this.character.hit();
+					this.statusbar.setPercentage(this.character.energy);
 				}
 			})
 		}, 1000);

@@ -1,38 +1,14 @@
-class MoveableObject {
-	position_x = 30;
-	position_y = 50;
-	img;
-	width = 300;
-	height = 500;
-	imageCache = {};
+class MoveableObject extends DrawableObject {
 	speed = 0.15;
 	otherDirection = false;
 	energy = 100;
-	hitted_by_pufferfish = false;
-
-	loadImage(path) {
-		this.img = new Image();
-		this.img.src = path;
-	}
-
-
-	loadImages(arr) {
-		arr.forEach(path => {
-			let img = new Image();
-			img.src = path;
-			this.imageCache[path] = img;
-		});
-	}
+	lastHit = 0;
 
 	moveLeft() {
 		setInterval(() => {
 			//this.position_x -= 0.15 + Math.random() * 0.25;
 			this.position_x -= this.speed;
 		}, 1000 / 60);
-	}
-
-	moveRight() {
-
 	}
 
 	// this.character.isColliding(this.pufferfish)
@@ -57,9 +33,19 @@ class MoveableObject {
 		// console.log('Collision', this.energy);
 		if(this.energy < 0) {
 			this.energy = 0;
+		} else {
+			this.lastHit = new Date().getTime();
 		}
 	}
 
+	isHurt() {
+		//Differenz in Sekunden
+		let timepassed = new Date().getTime() - this.lastHit;
+		timepassed = timepassed / 1000;
+		return timepassed < 1; //gibt true aus oder false
+	}
+
+	// returned entweder true oder false
 	isDead() {
 		return this.energy == 0;
 	}

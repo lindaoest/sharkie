@@ -5,7 +5,6 @@ class Jellyfish extends MoveableObject {
 		'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
 		'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png',
 	];
-	currentImage = 0;
 
 
 	constructor() {
@@ -24,10 +23,7 @@ class Jellyfish extends MoveableObject {
 		this.speed = 0.15 + Math.random() * 1;
 
 		setInterval(() => {
-			let i = this.currentImage % this.IMAGES_SWIMMING.length;
-			let path = this.IMAGES_SWIMMING[i];
-			this.img = this.imageCache[path];
-			this.currentImage++;
+			this.playAnimation(this.IMAGES_SWIMMING)
 		}, 200);
 	}
 }

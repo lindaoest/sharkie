@@ -11,7 +11,6 @@ class Endboss extends MoveableObject {
 		'img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
 		'img/2.Enemy/3 Final Enemy/1.Introduce/10.png',
 	];
-	currentImage = 0;
 
 	constructor() {
 		super().loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
@@ -23,10 +22,7 @@ class Endboss extends MoveableObject {
 
 	animate() {
 		setInterval(() => {
-			let i = this.currentImage % this.IMAGES_SWIMMING.length;
-			let path = this.IMAGES_SWIMMING[i];
-			this.img = this.imageCache[path];
-			this.currentImage++;
+			this.playAnimation(this.IMAGES_SWIMMING);
 		}, 200);
 	}
 }

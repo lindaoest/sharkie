@@ -5,7 +5,6 @@ class Coins extends MoveableObject {
 		'img/4. Marcadores/1. Coins/3.png',
 		'img/4. Marcadores/1. Coins/4.png',
 	];
-	currentImage = 0;
 	changePosition = 10;
 
 	constructor(x, y) {
@@ -21,10 +20,7 @@ class Coins extends MoveableObject {
 
 	animate() {
 		setInterval(() => {
-			let i = this.currentImage % this.IMAGES_SPINNING.length;
-			let path = this.IMAGES_SPINNING[i];
-			this.img = this.imageCache[path];
-			this.currentImage++;
+			this.playAnimation(this.IMAGES_SPINNING);
 		}, 400);
 	}
 }
