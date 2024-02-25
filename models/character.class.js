@@ -13,6 +13,10 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
 		'img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
 	];
+	IMAGES_HITTINGJELLYFISH = [
+		'img/1.Sharkie/5.Hurt/2.Electric_shock/o1.png',
+		'img/1.Sharkie/5.Hurt/2.Electric_shock/o2.png',
+	];
 	IMAGES_DEAD = [
 		'img/1.Sharkie/6.dead/1.Poisoned/1.png',
 		'img/1.Sharkie/6.dead/1.Poisoned/2.png',
@@ -37,7 +41,9 @@ class Character extends MoveableObject {
 		this.loadImages(this.IMAGES_SWIMMING);
 		this.loadImages(this.IMAGES_DEAD);
 		this.loadImages(this.IMAGES_HITTINGPUFFERFISH);
-		this.height = 300;
+		this.loadImages(this.IMAGES_HITTINGJELLYFISH);
+		this.height = 200;
+		this.width = 200;
 
 		this.animate();
 		// this.collision_pufferfish();
@@ -72,8 +78,10 @@ class Character extends MoveableObject {
 			if(this.isDead()) {
 				//Dead Animation
 				this.playAnimation(this.IMAGES_DEAD);
-			} else if(this.isHurt()) {
+			} else if(this.isHurt() && this.hitPufferfish()) {
 				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH);
+			} else if(this.isHurt() && this.hitJellyfish()) {
+				this.playAnimation(this.IMAGES_HITTINGJELLYFISH);
 			} else {
 				if(this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down) {
 					//Swim Animation
@@ -81,5 +89,17 @@ class Character extends MoveableObject {
 				}
 			}
 		}, 100);
+	}
+
+	getCoin() {
+		if(this.coins < 100) {
+			this.coins += 3;
+		}
+	}
+
+	getPoison() {
+		if(this.poison < 100) {
+			this.poison += 10;
+		}
 	}
 }

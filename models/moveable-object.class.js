@@ -3,6 +3,7 @@ class MoveableObject extends DrawableObject {
 	otherDirection = false;
 	energy = 100;
 	lastHit = 0;
+	enemy_spezies = '';
 
 	moveLeft() {
 		setInterval(() => {
@@ -28,13 +29,14 @@ class MoveableObject extends DrawableObject {
 				this.position_y <= obj.position_y + obj.height
 	}
 
-	hit() {
+	hit(spezies) {
 		this.energy -= 5;
 		// console.log('Collision', this.energy);
 		if(this.energy < 0) {
 			this.energy = 0;
 		} else {
 			this.lastHit = new Date().getTime();
+			this.enemy_spezies = spezies;
 		}
 	}
 
@@ -43,6 +45,18 @@ class MoveableObject extends DrawableObject {
 		let timepassed = new Date().getTime() - this.lastHit;
 		timepassed = timepassed / 1000;
 		return timepassed < 1; //gibt true aus oder false
+	}
+
+	hitPufferfish() {
+		if(this.enemy_spezies == 'pufferfish') {
+			return this.enemy_spezies === 'pufferfish';
+		}
+	}
+
+	hitJellyfish() {
+		if(this.enemy_spezies == 'jellyfish') {
+			return this.enemy_spezies === 'jellyfish';
+		}
 	}
 
 	// returned entweder true oder false

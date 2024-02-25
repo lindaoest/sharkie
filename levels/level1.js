@@ -4,12 +4,12 @@ let level1;
 function initLevel() {
 	level1 = new Level(
 		[
-			new Pufferfish(),
-			new Pufferfish(),
-			new Pufferfish(),
-			new Jellyfish(),
-			new Jellyfish(),
-			new Jellyfish(),
+			new Pufferfish('pufferfish'),
+			new Pufferfish('pufferfish'),
+			new Pufferfish('pufferfish'),
+			new Jellyfish('jellyfish'),
+			new Jellyfish('jellyfish'),
+			new Jellyfish('jellyfish'),
 			new Endboss()
 		],
 		[
@@ -53,6 +53,29 @@ function initLevel() {
 			new Coins(1000 + 150, 150 + 45),
 			new Coins(1000 + 100, 150 + 90),
 			new Coins(1000 + 50, 150 + 45),
+
+			new Coins(1300, 150),
+			new Coins(1300 + 50, 150 - 45),
+			new Coins(1300 + 100, 150 - 90),
+			new Coins(1300 + 150, 150 - 45),
+			new Coins(1300 + 200, 150),
+			new Coins(1300 + 150, 150 + 45),
+			new Coins(1300 + 100, 150 + 90),
+			new Coins(1300 + 50, 150 + 45),
+
+			new Coins(1600, 350),
+			new Coins(1600 + 30, 350 - 50),
+			new Coins(1600 + 100, 350 - 70),
+			new Coins(1600 + 150, 350 - 70),
+			new Coins(1600 + 210, 350 - 50),
+			new Coins(1600 + 250, 350),
+
+			new Coins(1900, 50),
+			new Coins(1900 + 50, 50 + 50),
+			new Coins(1900 + 100, 50 + 70),
+			new Coins(1900 + 150, 50 + 70),
+			new Coins(1900 + 210, 50 + 50),
+			new Coins(1900 + 250, 50),
 		]
 	)
 }

@@ -2,7 +2,15 @@ class World {
 	character = new Character();
 	poisons = [
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100, true),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1380, 100, true),
+		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1710, 320),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2000, 20, true),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 700, 60, true),
+		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 900, 300),
+		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1380, 320),
+		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2300, 80, true),
+		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 	];
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
 	statusbar_energy = new StatusbarEnergy(20, 40, 100);
@@ -14,6 +22,8 @@ class World {
 	keyboard;
 	ctx;
 	camera_x = 0;
+	coin_audio = new Audio('audio/coins.mp3');
+	poison_audio = new Audio('audio/poison.mp3');
 
 	constructor(canvas, keyboard) {
 		this.ctx = canvas.getContext('2d');
@@ -23,6 +33,7 @@ class World {
 		this.setWorld();
 		this.checkCollisions();
 		this.getCoins();
+		this.getPoison();
 	}
 
 	setWorld() {
@@ -38,17 +49,17 @@ class World {
 		// this.addToMap(this.water);
 		this.addObjectsToMap(this.level.backgroundObjects);
 
-		this.ctx.translate(-this.camera_x, 0);
-		this.addToMap(this.statusbar_coins);
-		this.addToMap(this.statusbar_energy);
-		this.addToMap(this.statusbar_poison);
-		this.ctx.translate(this.camera_x, 0);
-
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.poisons);
+
+		this.ctx.translate(-this.camera_x, 0);
+		this.addToMap(this.statusbar_coins);
+		this.addToMap(this.statusbar_energy);
+		this.addToMap(this.statusbar_poison);
+		this.ctx.translate(this.camera_x, 0);
 
 		this.ctx.translate(-this.camera_x, 0);
 
@@ -103,7 +114,8 @@ class World {
 			this.level.enemies.forEach((enemy) => {
 				if(this.character.isColliding(enemy)) {
 					//console.log('Collision', enemy);
-					this.character.hit();
+					//console.log(enemy.enemy_spezies);
+					this.character.hit(enemy.enemy_spezies);
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
 				}
 			})
@@ -112,11 +124,42 @@ class World {
 
 	getCoins() {
 		setInterval(() => {
-			this.level.coins.forEach((coin) => {
-				if(this.character.isColliding(coin)) {
+			this.coin_audio.pause();
+			this.coin_audio.currentTime = 0;
+			// Iteriere über alle Münzen im Level
+			for (let i = 0; i < this.level.coins.length; i++) {
+				let coin = this.level.coins[i];
+				// Überprüfe, ob der Charakter mit dieser Münze kollidiert
+				if (this.character.isColliding(coin)) {
+					// Entferne die Münze aus dem Level
+					this.level.coins.splice(i, 1);
+					// Aktualisiere den Münzzähler des Charakters
+					this.character.getCoin();
+					// Sound
+					this.coin_audio.play();
+					// Aktualisiere die Statusleiste für Münzen
 					this.statusbar_coins.setPercentageCoins(this.character.coins);
+					// Verringere den Index, da das Array sich jetzt verschoben hat
+					i--;
 				}
-			})
-		}, 1000);
+			}
+		}, 200);
+	}
+
+	getPoison() {
+		setInterval(() => {
+			this.poison_audio.pause();
+			this.poison_audio.currentTime = 0;
+			for (let i = 0; i < this.poisons.length; i++) {
+				let poison = this.poisons[i];
+				if (this.character.isColliding(poison)) {
+					this.poisons.splice(i, 1);
+					this.character.getPoison();
+					this.poison_audio.play();
+					this.statusbar_poison.setPercentagePoison(this.character.poison);
+					i--;
+				}
+			}
+		}, 200);
 	}
 }
