@@ -21,8 +21,16 @@ class Endboss extends MoveableObject {
 	}
 
 	animate() {
+		let i = 0;
 		setInterval(() => {
-			this.playAnimation(this.IMAGES_SWIMMING);
+			if(i > 10) {
+				this.playAnimation(this.IMAGES_SWIMMING);
+			} else {
+				this.playAnimation(this.IMAGES_SWIMMING);
+			}
+			i++;
+
+			//if character.position_x > 2000 && firstContact dann setzte i auf 0 und firstCotnact auf true
 		}, 200);
 	}
 }

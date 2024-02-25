@@ -4,6 +4,7 @@ let keyboard = new Keyboard();
 
 function init() {
 	canvas = document.getElementById('canvas');
+	initLevel();
 	world = new World(canvas, keyboard);
 
 	console.log('My moveable object', world);
@@ -44,3 +45,8 @@ window.addEventListener('keyup', (event) => {
 		keyboard.key_space = false;
 	}
 })
+
+function startGame() {
+	document.querySelector('.startScreen').style.display = 'none';
+	init();
+}

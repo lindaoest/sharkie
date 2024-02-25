@@ -28,6 +28,8 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/6.dead/1.Poisoned/12.png',
 	];
 	world;
+	coins = 0;
+	poison = 0;
 	swimming_sound = new Audio('audio/swim.mp3');
 
 	constructor() {

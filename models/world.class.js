@@ -4,7 +4,9 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
 		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100),
 	];
-	statusbar = new Statusbar('img/4. Marcadores/green/Coin/0_  copia 4.png', 40, 10);
+	statusbar_coins = new StatusbarCoins(20, 10, 0);
+	statusbar_energy = new StatusbarEnergy(20, 40, 100);
+	statusbar_poison = new StatusbarPoison(20, 80, 0);
 	level = level1;
 	// water = new Water();
 	// light = new Light();
@@ -20,11 +22,11 @@ class World {
 		this.draw();
 		this.setWorld();
 		this.checkCollisions();
+		this.getCoins();
 	}
 
 	setWorld() {
 		this.character.world = this;
-		this.statusbar.world = this;
 	}
 
 	draw() {
@@ -35,7 +37,13 @@ class World {
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
 		// this.addToMap(this.water);
 		this.addObjectsToMap(this.level.backgroundObjects);
-		this.addToMap(this.statusbar);
+
+		this.ctx.translate(-this.camera_x, 0);
+		this.addToMap(this.statusbar_coins);
+		this.addToMap(this.statusbar_energy);
+		this.addToMap(this.statusbar_poison);
+		this.ctx.translate(this.camera_x, 0);
+
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
 		this.addObjectsToMap(this.level.enemies);
@@ -65,7 +73,7 @@ class World {
 
 		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
 
-		if(mo instanceof Character || mo instanceof Pufferfish) {
+		if(mo instanceof Character || mo instanceof Pufferfish || mo instanceof Coins) {
 			this.ctx.beginPath();
 			this.ctx.lineWidth = '5';
 			this.ctx.strokeStyle = 'blue';
@@ -96,7 +104,17 @@ class World {
 				if(this.character.isColliding(enemy)) {
 					//console.log('Collision', enemy);
 					this.character.hit();
-					this.statusbar.setPercentage(this.character.energy);
+					this.statusbar_energy.setPercentageHeart(this.character.energy);
+				}
+			})
+		}, 1000);
+	}
+
+	getCoins() {
+		setInterval(() => {
+			this.level.coins.forEach((coin) => {
+				if(this.character.isColliding(coin)) {
+					this.statusbar_coins.setPercentageCoins(this.character.coins);
 				}
 			})
 		}, 1000);
