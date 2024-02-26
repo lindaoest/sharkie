@@ -1,11 +1,12 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let time_standing;
 
 function init() {
 	canvas = document.getElementById('canvas');
 	initLevel();
-	world = new World(canvas, keyboard);
+	world = new World(canvas, keyboard, time_standing);
 
 	console.log('My moveable object', world);
 }
@@ -26,6 +27,10 @@ window.addEventListener('keydown', (event) => {
 	if(event.keyCode == 32) {
 		keyboard.key_space = true;
 	}
+	if(event.keyCode == 68) {
+		keyboard.key_attack = true;
+	}
+	time_standing = 0;
 })
 
 window.addEventListener('keyup', (event) => {
@@ -44,6 +49,10 @@ window.addEventListener('keyup', (event) => {
 	if(event.keyCode == 32) {
 		keyboard.key_space = false;
 	}
+	if(event.keyCode == 68) {
+		keyboard.key_attack = false;
+	}
+	time_standing = new Date().getTime();
 })
 
 function startGame() {

@@ -10,6 +10,9 @@ function initLevel() {
 			new Jellyfish('jellyfish'),
 			new Jellyfish('jellyfish'),
 			new Jellyfish('jellyfish'),
+			new Jellyfish_Purple('jellyfish', 700, 90),
+			new Jellyfish_Purple('jellyfish', 780, 60),
+			new Jellyfish_Purple('jellyfish', 860, 30),
 			new Endboss()
 		],
 		[

@@ -12,6 +12,7 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2300, 80, true),
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 	];
+	bubble_poison = new BubblePoison();
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
 	statusbar_energy = new StatusbarEnergy(20, 40, 100);
 	statusbar_poison = new StatusbarPoison(20, 80, 0);
@@ -24,11 +25,13 @@ class World {
 	camera_x = 0;
 	coin_audio = new Audio('audio/coins.mp3');
 	poison_audio = new Audio('audio/poison.mp3');
+	time_standing;
 
-	constructor(canvas, keyboard) {
+	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
 		this.canvas = canvas;
 		this.keyboard = keyboard;
+		this.time_standing = time_standing;
 		this.draw();
 		this.setWorld();
 		this.checkCollisions();
@@ -38,6 +41,7 @@ class World {
 
 	setWorld() {
 		this.character.world = this;
+		this.bubble_poison.world = this;
 	}
 
 	draw() {
@@ -51,6 +55,7 @@ class World {
 
 		// this.addToMap(this.light);
 		this.addToMap(this.character);
+		this.addToMap(this.bubble_poison);
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.poisons);
