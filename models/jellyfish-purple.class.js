@@ -6,6 +6,7 @@ class Jellyfish_Purple extends MoveableObject {
 		'img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png',
 	];
 	enemy_spezies = '';
+	changeDirection = false;
 
 
 	constructor(spezies, position_x, position_y) {
@@ -25,12 +26,16 @@ class Jellyfish_Purple extends MoveableObject {
 		this.speed = 0.15;
 
 		setInterval(() => {
-			if(this.position_y < 350) {
+			if(this.position_y < 350 && !this.changeDirection) {
 				this.position_y += 5;
-			} else if(this.position_y >= 350) {
+			} else if(this.position_y >= 350 || this.changeDirection) {
+				if(this.position_y <= 30) {
+					this.changeDirection = false;
+				} else {
+					this.changeDirection = true;
+				}
 				this.position_y -= 5;
 			}
-			console.log(this.position_y);
 			this.playAnimation(this.IMAGES_SWIMMING)
 		}, 200);
 	}
