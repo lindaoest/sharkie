@@ -9,8 +9,8 @@ body {
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
 	background-image: url('img/3. Background/Dark/2.png');
 	background-size: cover;
 	backdrop-filter: blur(5px);
@@ -22,6 +22,10 @@ body {
 
 h1 {
 	margin: 0 0 24px 0;
+}
+
+.canvas-container {
+	position: relative;
 }
 
 canvas {
@@ -36,7 +40,8 @@ canvas {
 	background-size: contain;
     border-radius: 25px;
 	position: absolute;
-	top: 22%;
+	top: 0;
+	left: 0;
 	height: 487px;
     width: 720px;
 }

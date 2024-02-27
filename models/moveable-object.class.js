@@ -4,6 +4,7 @@ class MoveableObject extends DrawableObject {
 	energy = 100;
 	lastHit = 0;
 	enemy_spezies = '';
+	jellyfishDead = false;
 
 	moveLeft() {
 		setInterval(() => {
@@ -57,6 +58,10 @@ class MoveableObject extends DrawableObject {
 		if(this.enemy_spezies == 'jellyfish') {
 			return this.enemy_spezies === 'jellyfish';
 		}
+	}
+
+	jellyfishIsHitted() {
+		this.jellyfishDead = true;
 	}
 
 	// returned entweder true oder false

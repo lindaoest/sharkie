@@ -13,6 +13,7 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 	];
 	bubble_poison = new BubblePoison();
+	bubble_poisons = [];
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
 	statusbar_energy = new StatusbarEnergy(20, 40, 100);
 	statusbar_poison = new StatusbarPoison(20, 80, 0);
@@ -37,6 +38,8 @@ class World {
 		this.checkCollisions();
 		this.getCoins();
 		this.getPoison();
+		this.checkAttacks();
+		this.checkAttackOnJellyfish();
 	}
 
 	setWorld() {
@@ -57,6 +60,7 @@ class World {
 		this.addToMap(this.character);
 		this.addToMap(this.bubble_poison);
 		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.bubble_poisons);
 		this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.poisons);
 
@@ -112,6 +116,26 @@ class World {
 	flipImageBack(mo) {
 		mo.position_x = mo.position_x * -1;
 		this.ctx.restore(); //Das Spiegeln wieder rückläufig machen, damit die anderen Bilder nicht auch gespiegelt werden
+	}
+
+	checkAttacks() {
+		setInterval(() => {
+			if(this.keyboard.key_attack) {
+				this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90))
+			}
+		}, 1000);
+	}
+
+	checkAttackOnJellyfish() {
+		setInterval(() => {
+			this.bubble_poisons.forEach((bubble_poison) => {
+				this.level.enemies.forEach((enemy) => {
+					if(bubble_poison.isColliding(enemy) && enemy['enemy_spezies'] == 'jellyfish') {
+						enemy.jellyfishIsHitted();
+					}
+				})
+			})
+		}, 1000);
 	}
 
 	checkCollisions() {
