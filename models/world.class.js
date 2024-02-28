@@ -12,6 +12,7 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2300, 80, true),
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 	];
+	endboss = new Endboss();
 	bubble_poison = new BubblePoison();
 	bubble_poisons = [];
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
@@ -40,6 +41,8 @@ class World {
 		this.getPoison();
 		this.checkAttacks();
 		this.checkAttackOnJellyfish();
+		this.animateEndboss();
+		this.checkAttackOnEndboss();
 	}
 
 	setWorld() {
@@ -57,12 +60,13 @@ class World {
 		this.addObjectsToMap(this.level.backgroundObjects);
 
 		// this.addToMap(this.light);
-		this.addToMap(this.character);
-		this.addToMap(this.bubble_poison);
-		this.addObjectsToMap(this.level.enemies);
-		this.addObjectsToMap(this.bubble_poisons);
 		this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.poisons);
+		this.addToMap(this.character);
+		this.addToMap(this.bubble_poison);
+		this.addToMap(this.endboss);
+		this.addObjectsToMap(this.level.enemies);
+		this.addObjectsToMap(this.bubble_poisons);
 
 		this.ctx.translate(-this.camera_x, 0);
 		this.addToMap(this.statusbar_coins);
@@ -132,6 +136,7 @@ class World {
 				this.level.enemies.forEach((enemy) => {
 					if(bubble_poison.isColliding(enemy) && enemy['enemy_spezies'] == 'jellyfish') {
 						enemy.jellyfishIsHitted();
+						this.bubble_poisons.splice(bubble_poison, 1);
 					}
 				})
 			})
@@ -144,7 +149,7 @@ class World {
 				if(this.character.isColliding(enemy)) {
 					//console.log('Collision', enemy);
 					//console.log(enemy.enemy_spezies);
-					this.character.hit(enemy.enemy_spezies);
+					this.character.hit(5, enemy.enemy_spezies);
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
 				}
 			})
@@ -190,5 +195,24 @@ class World {
 				}
 			}
 		}, 200);
+	}
+
+	animateEndboss() {
+		setInterval(() => {
+			if(this.character.position_x > 2090) {
+				this.endboss.firstContactEndboss();
+			}
+		}, 200);
+	}
+
+	checkAttackOnEndboss() {
+		setInterval(() => {
+			this.bubble_poisons.forEach((bubble_poison) => {
+				if(bubble_poison.isColliding(this.endboss)) {
+					this.endboss.hit(20);
+					this.endboss.endbossIsHitted();
+				}
+			})
+		}, 1000);
 	}
 }

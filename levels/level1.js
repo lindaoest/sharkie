@@ -15,8 +15,7 @@ function initLevel() {
 			new Jellyfish_Purple('jellyfish', 860, 30),
 			new Jellyfish_Dangerous('jellyfish', 1580, 90),
 			new Jellyfish_Dangerous('jellyfish', 1500, 150),
-			new Jellyfish_Dangerous('jellyfish', 1580, 210),
-			new Endboss()
+			new Jellyfish_Dangerous('jellyfish', 1580, 210)
 		],
 		[
 			new BackgroundObject('img/3. Background/Layers/5. Water/D1.png', 0, 480),

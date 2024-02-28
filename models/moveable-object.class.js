@@ -5,6 +5,10 @@ class MoveableObject extends DrawableObject {
 	lastHit = 0;
 	enemy_spezies = '';
 	jellyfishDead = false;
+	firstContact = false;
+	endbossHitted = false;
+	coins = 0;
+	poison = 0;
 
 	moveLeft() {
 		setInterval(() => {
@@ -30,8 +34,8 @@ class MoveableObject extends DrawableObject {
 				this.position_y <= obj.position_y + obj.height
 	}
 
-	hit(spezies) {
-		this.energy -= 5;
+	hit(energy, spezies) {
+		this.energy -= energy;
 		// console.log('Collision', this.energy);
 		if(this.energy < 0) {
 			this.energy = 0;
@@ -67,5 +71,13 @@ class MoveableObject extends DrawableObject {
 	// returned entweder true oder false
 	isDead() {
 		return this.energy == 0;
+	}
+
+	firstContactEndboss() {
+		this.firstContact = true;
+	}
+
+	endbossIsHitted() {
+		this.endbossHitted = true;
 	}
 }

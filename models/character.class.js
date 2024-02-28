@@ -77,9 +77,16 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png',
 		'img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png',
 	];
+	IMAGES_BUBBLE = [
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
+		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
+	];
 	world;
-	coins = 0;
-	poison = 0;
 	swimming_sound = new Audio('audio/swim.mp3');
 
 	constructor() {
@@ -135,7 +142,11 @@ class Character extends MoveableObject {
 				//Swim Animation
 				this.playAnimation(this.IMAGES_SWIMMING);
 			} else if(this.world.keyboard.key_attack) {
-				this.playAnimation(this.IMAGES_BUBBLE_POISON);
+				if(this.poison == 0) {
+					this.playAnimation(this.IMAGES_BUBBLE_POISON);
+				} else {
+					this.playAnimation(this.IMAGES_BUBBLE_POISON);
+				}
 			} else {
 				if(!this.world.keyboard.key_right && this.timeTired()) {
 					this.playAnimation(this.IMAGES_TIRED);
