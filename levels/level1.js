@@ -4,18 +4,39 @@ let level1;
 function initLevel() {
 	level1 = new Level(
 		[
-			new Pufferfish('pufferfish'),
-			new Pufferfish('pufferfish'),
-			new Pufferfish('pufferfish'),
-			new Jellyfish('jellyfish'),
-			new Jellyfish('jellyfish'),
-			new Jellyfish('jellyfish'),
+			new Pufferfish('pufferfish', 500, 400),
+			new Pufferfish('pufferfish', 500, 400),
+			new Pufferfish('pufferfish', 500, 400),
+
+			new Jellyfish('jellyfish', 520, 210),
+			new Jellyfish('jellyfish', 600, 210),
+			new Jellyfish('jellyfish', 680, 210),
+
 			new Jellyfish_Purple('jellyfish', 700, 90),
 			new Jellyfish_Purple('jellyfish', 780, 60),
 			new Jellyfish_Purple('jellyfish', 860, 30),
+
 			new Jellyfish_Dangerous('jellyfish', 1580, 90),
 			new Jellyfish_Dangerous('jellyfish', 1500, 150),
-			new Jellyfish_Dangerous('jellyfish', 1580, 210)
+			new Jellyfish_Dangerous('jellyfish', 1580, 210),
+
+			new Pufferfish('pufferfish', 1900, 400),
+			new Pufferfish('pufferfish', 1900, 400),
+			new Pufferfish('pufferfish', 1900, 400),
+			new Pufferfish('pufferfish', 1900, 400),
+
+			new Jellyfish_Purple('jellyfish', 2020, 140),
+			new Jellyfish_Purple('jellyfish', 2100, 120),
+			new Jellyfish_Purple('jellyfish', 2180, 90),
+			new Jellyfish_Purple('jellyfish', 2260, 60),
+			new Jellyfish_Purple('jellyfish', 2340, 30),
+
+			new Pufferfish('pufferfish', 2300, 400),
+			new Pufferfish('pufferfish', 2300, 400),
+			new Pufferfish('pufferfish', 2300, 400),
+			new Pufferfish('pufferfish', 2300, 400),
+
+			new Pufferfish('pufferfish', 1900, 400),
 		],
 		[
 			new BackgroundObject('img/3. Background/Layers/5. Water/D1.png', 0, 480),

@@ -59,3 +59,8 @@ function startGame() {
 	document.querySelector('.startScreen').style.display = 'none';
 	init();
 }
+
+function openFullscreen() {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+}
