@@ -18,15 +18,12 @@ class World {
 	statusbar_energy = new StatusbarEnergy(20, 40, 100);
 	statusbar_poison = new StatusbarPoison(20, 80, 0);
 	level = level1;
-	// water = new Water();
-	// light = new Light();
 	canvas;
 	keyboard;
 	ctx;
 	camera_x = 0;
-	coin_audio = new Audio('audio/coins.mp3');
-	poison_audio = new Audio('audio/poison.mp3');
 	time_standing;
+	sound_is_muted = false;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -42,10 +39,12 @@ class World {
 		this.checkAttackOnJellyfish();
 		this.animateEndboss();
 		this.checkAttackOnEndboss();
+		this.addBackgroundSound();
 	}
 
 	setWorld() {
 		this.character.world = this;
+		this.endboss.world = this;
 	}
 
 	draw() {
@@ -94,7 +93,7 @@ class World {
 
 		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
 
-		if(mo instanceof Character || mo instanceof Pufferfish || mo instanceof Coins) {
+		if(mo instanceof Character) {
 			this.ctx.beginPath();
 			this.ctx.lineWidth = '5';
 			this.ctx.strokeStyle = 'blue';
@@ -148,8 +147,6 @@ class World {
 		setInterval(() => {
 			this.level.enemies.forEach((enemy) => {
 				if(this.character.isColliding(enemy)) {
-					//console.log('Collision', enemy);
-					//console.log(enemy.enemy_spezies);
 					this.character.hit(5, enemy.enemy_spezies);
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
 				}
@@ -159,8 +156,10 @@ class World {
 
 	getCoins() {
 		setInterval(() => {
-			this.coin_audio.pause();
-			this.coin_audio.currentTime = 0;
+			if(!this.sound_is_muted) {
+				sounds.coin_audio.pause();
+			}
+			sounds.coin_audio.currentTime = 0;
 			// Iteriere über alle Münzen im Level
 			for (let i = 0; i < this.level.coins.length; i++) {
 				let coin = this.level.coins[i];
@@ -171,7 +170,9 @@ class World {
 					// Aktualisiere den Münzzähler des Charakters
 					this.character.getCoin();
 					// Sound
-					this.coin_audio.play();
+					if(!this.sound_is_muted) {
+						sounds.coin_audio.play();
+					}
 					// Aktualisiere die Statusleiste für Münzen
 					this.statusbar_coins.setPercentageCoins(this.character.coins);
 					// Verringere den Index, da das Array sich jetzt verschoben hat
@@ -183,14 +184,18 @@ class World {
 
 	getPoison() {
 		setInterval(() => {
-			this.poison_audio.pause();
-			this.poison_audio.currentTime = 0;
+			if(!this.sound_is_muted) {
+				sounds.poison_audio.pause();
+			}
+			sounds.poison_audio.currentTime = 0;
 			for (let i = 0; i < this.poisons.length; i++) {
 				let poison = this.poisons[i];
 				if (this.character.isColliding(poison)) {
 					this.poisons.splice(i, 1);
 					this.character.getPoison();
-					this.poison_audio.play();
+					if(!this.sound_is_muted) {
+						sounds.poison_audio.play();
+					}
 					this.statusbar_poison.setPercentagePoison(this.character.poison);
 					i--;
 				}
@@ -217,13 +222,19 @@ class World {
 		}, 1000);
 	}
 
+	addBackgroundSound() {
+		setInterval(() => {
+			if(!this.sound_is_muted || !this.endboss.firstContact) {
+				sounds.background_audio.play();
+			}
+		}, 300);
+	}
+
 	playAudios() {
-		this.coin_audio.play();
-        this.poison_audio.play();
+		this.sound_is_muted = false;
     }
 
 	muteAudios() {
-		this.coin_audio.pause();
-        this.poison_audio.pause();
+		this.sound_is_muted = true;
     }
 }

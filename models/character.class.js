@@ -113,31 +113,37 @@ class Character extends MoveableObject {
 				//Change x position
 				this.position_x += 10;
 				this.otherDirection = false;
-				this.swimming_sound.play();
+				this.playSound();
 			}
 			if(this.world.keyboard.key_left && this.position_x > 0) {
 				this.position_x -= 10;
 				this.otherDirection = true;
-				this.swimming_sound.play();
+				this.playSound();
 			}
 			if(this.world.keyboard.key_up && this.position_y > -140) {
 				this.position_y -= 10;
-				this.swimming_sound.play();
+				this.playSound();
 			}
 			if(this.world.keyboard.key_down && this.position_y < 250) {
 				this.position_y += 10;
-				this.swimming_sound.play();
+				this.playSound();
 			}
 			this.world.camera_x = -this.position_x;
 		}, 1000 / 60);
 
 		setInterval(() => {
+			if(!this.world.sound_is_muted) {
+				sounds.electricity_audio.pause();
+			}
 			if(this.isDead()) {
 				//Dead Animation
 				this.playAnimation(this.IMAGES_DEAD);
 			} else if(this.isHurt() && this.hitPufferfish()) {
 				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH);
 			} else if(this.isHurt() && this.hitJellyfish()) {
+				if(!this.world.sound_is_muted) {
+					sounds.electricity_audio.play();
+				}
 				this.playAnimation(this.IMAGES_HITTINGJELLYFISH);
 			} else if(this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down) {
 				//Swim Animation
@@ -156,6 +162,12 @@ class Character extends MoveableObject {
 				}
 			}
 		}, 200);
+	}
+
+	playSound() {
+		if(!this.world.sound_is_muted) {
+			this.swimming_sound.play();
+		}
 	}
 
 	timeTired() {

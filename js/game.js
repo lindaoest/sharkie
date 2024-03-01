@@ -2,10 +2,21 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let time_standing;
+let sounds;
 
 function init() {
 	canvas = document.getElementById('canvas');
 	initLevel();
+
+	sounds = {
+		'coin_audio': new Audio('audio/coins.mp3'),
+		'poison_audio': new Audio('audio/poison.mp3'),
+		'background_audio': new Audio('audio/background-sound.mp3'),
+		'action_audio': new Audio('audio/action-sound.mp3'),
+		'whale_audio': new Audio('audio/whale.mp3'),
+		'electricity_audio': new Audio('audio/electricity.mp3'),
+	}
+
 	world = new World(canvas, keyboard, time_standing);
 
 	console.log('My moveable object', world);
