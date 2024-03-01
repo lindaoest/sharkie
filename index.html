@@ -36,24 +36,53 @@
 		<div class="startScreen">
 			<img onclick="startGame()" class="startButton" src="./img/6.Botones/Start/2.png" alt="">
 		</div>
-		<div class="instructions">
-			
+		<div id="instructions" class="overlay instructions">
+			<div class="titles flex">
+				<h3 onclick="openControls()">Controls</h3>
+				<h3 onclick="openTips()">Tips</h3>
+				<h3 onclick="openSources()">Sources</h3>
+			</div>
+			<div id="controls" class="controls">
+				<div class="move flex">
+					<img src="./img/6.Botones/Key/arrow keys.png" alt="">
+					<h3>Move Sharkie</h3>
+				</div>
+				<div class="shoot-bubble flex">
+					<img src="./img/6.Botones/Key/D key.png" alt="">
+					<h3>Shoot Bubble</h3>
+				</div>
+				<div class="meele-attack flex">
+					<img src="./img/6.Botones/Key/Space Bar key.png" alt="">
+					<h3>Meele Attack</h3>
+				</div>
+			</div>
+			<div id="tips" class="tips d-none">
+				<p>Your melee attacks only damages Pufferfishes<br>
+					Your range attacks only damages Jellifish and the endboss<br>
+					Collect Poision in order to deal increase damage to the endboss<br>
+				</p>
+			</div>
+			<div id="sources" class="sources d-none">
+				<p>sound from freesound.org<br>
+					icons from thenounproject.com
+				</p>
+			</div>
 		</div>
-		<div class="menu">
+		<div class="overlay menu">
 			<div onclick="openFullscreen()" class="fullscreen">
 				<img src="./icons/fullscreen.svg" alt="">
 			</div>
 			<div class="instructions-menu">
-				<img src="./icons/instructions.svg" alt="">
-				<img src="./icons/close.svg" alt="">
+				<img onclick="openInstructions()" id="instructions-open" class="instructions-open" src="./icons/instructions.svg" alt="">
+				<img onclick="closeInstructions()" id="instructions-close" class="instructions-close d-none" src="./icons/close.svg" alt="">
 			</div>
 			<div class="audio">
-				<img src="./icons/pause.svg" alt="">
-				<img src="./icons/audio.svg" alt="">
+				<img onclick="pauseGame()" id="play-game" src="./icons/play.svg" alt="">
+				<img onclick="playGame()" id="pause-game" src="./icons/pause.svg" alt="">
 			</div>
 			<div class="play-button">
-				<img src="./icons/play.svg" alt="">
-				<img src="./icons/mute.svg" alt="">
+				<img onclick="muteAudio()" id="play-audio" src="./icons/audio.svg" alt="">
+				<img onclick="playAudio()" id="mute-audio" src="./icons/mute.svg" alt="">
 			</div>
 		</div>
 	</div>

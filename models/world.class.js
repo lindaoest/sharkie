@@ -13,7 +13,6 @@ class World {
 		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 	];
 	endboss = new Endboss();
-	bubble_poison = new BubblePoison();
 	bubble_poisons = [];
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
 	statusbar_energy = new StatusbarEnergy(20, 40, 100);
@@ -47,7 +46,6 @@ class World {
 
 	setWorld() {
 		this.character.world = this;
-		this.bubble_poison.world = this;
 	}
 
 	draw() {
@@ -63,7 +61,6 @@ class World {
 		this.addObjectsToMap(this.level.coins);
 		this.addObjectsToMap(this.poisons);
 		this.addToMap(this.character);
-		this.addToMap(this.bubble_poison);
 		this.addToMap(this.endboss);
 		this.addObjectsToMap(this.level.enemies);
 		this.addObjectsToMap(this.bubble_poisons);
@@ -125,7 +122,11 @@ class World {
 	checkAttacks() {
 		setInterval(() => {
 			if(this.keyboard.key_attack) {
-				this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90))
+				if(this.character.poison == 0) {
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false));
+				} else {
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true));
+				}
 			}
 		}, 1000);
 	}
@@ -134,7 +135,7 @@ class World {
 		setInterval(() => {
 			this.bubble_poisons.forEach((bubble_poison) => {
 				this.level.enemies.forEach((enemy) => {
-					if(bubble_poison.isColliding(enemy) && enemy['enemy_spezies'] == 'jellyfish') {
+					if(bubble_poison.isColliding(enemy) && enemy['enemy_spezies'] == 'jellyfish' && bubble_poison.isWithPoison) {
 						enemy.jellyfishIsHitted();
 						this.bubble_poisons.splice(bubble_poison, 1);
 					}
@@ -215,4 +216,14 @@ class World {
 			})
 		}, 1000);
 	}
+
+	playAudios() {
+		this.coin_audio.play();
+        this.poison_audio.play();
+    }
+
+	muteAudios() {
+		this.coin_audio.pause();
+        this.poison_audio.pause();
+    }
 }

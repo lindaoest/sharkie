@@ -39,6 +39,14 @@ class Endboss extends MoveableObject {
 		'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
 		'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
 	];
+	IMAGES_ATTACK = [
+		'img/2.Enemy/3 Final Enemy/Attack/1.png',
+		'img/2.Enemy/3 Final Enemy/Attack/2.png',
+		'img/2.Enemy/3 Final Enemy/Attack/3.png',
+		'img/2.Enemy/3 Final Enemy/Attack/4.png',
+		'img/2.Enemy/3 Final Enemy/Attack/5.png',
+		'img/2.Enemy/3 Final Enemy/Attack/6.png',
+	];
 
 	constructor() {
 		super().loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
@@ -46,8 +54,10 @@ class Endboss extends MoveableObject {
 		this.loadImages(this.IMAGES_FLOATING);
 		this.loadImages(this.IMAGES_HURT);
 		this.loadImages(this.IMAGES_DEAD);
+		this.loadImages(this.IMAGES_ATTACK);
 		this.position_x = 2500;
 		this.position_y = 0;
+		this.attackInterval = 0;
 		this.animate();
 	}
 
@@ -62,7 +72,14 @@ class Endboss extends MoveableObject {
 				this.playAnimation(this.IMAGES_DEAD);
 				this.endbossHitted = false;
 			} else {
-				this.playAnimation(this.IMAGES_FLOATING);
+				if (this.attackInterval >= 2) { // Prüfen, ob 3 Sekunden vergangen sind
+                    this.playAnimation(this.IMAGES_ATTACK);
+                    this.attackInterval = 0; // Zurücksetzen des Intervalls
+					this.position_x -= 10;
+                } else {
+                    this.playAnimation(this.IMAGES_FLOATING);
+                    this.attackInterval += 0.2; // Erhöhen des Intervalls um 0.2 Sekunden (Intervallzeit = 200ms)
+                }
 			}
 			i++;
 

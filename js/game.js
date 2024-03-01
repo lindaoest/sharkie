@@ -64,3 +64,83 @@ function openFullscreen() {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
+
+function openInstructions() {
+	let instructions = document.getElementById('instructions');
+	let closeInstructions = document.getElementById('instructions-close');
+	let openInstructions = document.getElementById('instructions-open');
+	instructions.style.display = 'flex';
+	openInstructions.style.display = 'none';
+	closeInstructions.style.display = 'flex';
+}
+
+function closeInstructions() {
+	let instructions = document.getElementById('instructions');
+	let closeInstructions = document.getElementById('instructions-close');
+	let openInstructions = document.getElementById('instructions-open');
+	instructions.style.display = 'none';
+	openInstructions.style.display = 'flex';
+	closeInstructions.style.display = 'none';
+}
+
+function muteAudio() {
+	world.muteAudios();
+	let muteAudio = document.getElementById('mute-audio');
+	let playAudio = document.getElementById('play-audio');
+	muteAudio.style.display = 'flex';
+	playAudio.style.display = 'none';
+}
+
+function playAudio() {
+	world.playAudios();
+	let muteAudio = document.getElementById('mute-audio');
+	let playAudio = document.getElementById('play-audio');
+	muteAudio.style.display = 'none';
+	playAudio.style.display = 'flex';
+}
+
+function playGame() {
+	let pauseGame = document.getElementById('pause-game');
+	let playGame = document.getElementById('play-game');
+
+	pauseGame.style.display = 'none';
+	playGame.style.display = 'flex';
+}
+
+function pauseGame() {
+	let pauseGame = document.getElementById('pause-game');
+	let playGame = document.getElementById('play-game');
+
+	pauseGame.style.display = 'flex';
+	playGame.style.display = 'none';
+}
+
+function openControls() {
+	let controls = document.getElementById('controls');
+	let tips = document.getElementById('tips');
+	let sources = document.getElementById('sources');
+
+	controls.style.display = 'flex';
+	tips.style.display = 'none';
+	sources.style.display = 'none';
+}
+
+function openTips() {
+	let controls = document.getElementById('controls');
+	let tips = document.getElementById('tips');
+	let sources = document.getElementById('sources');
+
+	controls.style.display = 'none';
+	tips.style.display = 'flex';
+	sources.style.display = 'none';
+}
+
+function openSources() {
+	let controls = document.getElementById('controls');
+	let tips = document.getElementById('tips');
+	let sources = document.getElementById('sources');
+
+	controls.style.display = 'none';
+	tips.style.display = 'none';
+	sources.style.display = 'flex';
+}

@@ -1,12 +1,13 @@
 class BubblePoison extends MoveableObject {
-	world;
+	isWithPoison;
 
-	constructor(position_x, position_y) {
-		super().loadImage('img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png');
+	constructor(position_x, position_y, img, isWithPoison) {
+		super().loadImage(img);
 		this.height = 60;
 		this.width = 60;
 		this.position_x = position_x;
 		this.position_y = position_y;
+		this.isWithPoison = isWithPoison;
 
 		this.animate();
 	}

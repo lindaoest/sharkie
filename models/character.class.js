@@ -98,6 +98,7 @@ class Character extends MoveableObject {
 		this.loadImages(this.IMAGES_HITTINGPUFFERFISH);
 		this.loadImages(this.IMAGES_HITTINGJELLYFISH);
 		this.loadImages(this.IMAGES_BUBBLE_POISON);
+		this.loadImages(this.IMAGES_BUBBLE);
 		this.height = 200;
 		this.width = 200;
 
@@ -143,7 +144,7 @@ class Character extends MoveableObject {
 				this.playAnimation(this.IMAGES_SWIMMING);
 			} else if(this.world.keyboard.key_attack) {
 				if(this.poison == 0) {
-					this.playAnimation(this.IMAGES_BUBBLE_POISON);
+					this.playAnimation(this.IMAGES_BUBBLE);
 				} else {
 					this.playAnimation(this.IMAGES_BUBBLE_POISON);
 				}
