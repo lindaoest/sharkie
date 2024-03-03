@@ -118,8 +118,7 @@ canvas {
 .menu > * {
 	padding-right: 16px;
 }
-.menu #mute-audio,
-.menu #play-game {
+.menu #mute-audio {
 	display: none;
 }
 

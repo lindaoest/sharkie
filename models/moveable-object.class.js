@@ -5,10 +5,13 @@ class MoveableObject extends DrawableObject {
 	lastHit = 0;
 	enemy_spezies = '';
 	jellyfishDead = false;
+	pufferfishDead = false;
 	firstContact = false;
 	endbossHitted = false;
 	coins = 0;
 	poison = 0;
+	positionCharacterX;
+	positionCharacterY;
 
 	moveLeft() {
 		setInterval(() => {
@@ -65,6 +68,10 @@ class MoveableObject extends DrawableObject {
 	}
 
 	jellyfishIsHitted() {
+		this.jellyfishDead = true;
+	}
+
+	pufferfishIsHitted() {
 		this.jellyfishDead = true;
 	}
 

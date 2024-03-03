@@ -9,7 +9,6 @@ class Poison extends MoveableObject {
 		'img/4. Marcadores/Posión/Animada/7.png',
 		'img/4. Marcadores/Posión/Animada/8.png',
 	];
-
 	animatedGlass = false;
 
 	constructor(img, x, y, animatedGlass) {

@@ -36,7 +36,7 @@ function initLevel() {
 			new Pufferfish('pufferfish', 2300, 400),
 			new Pufferfish('pufferfish', 2300, 400),
 
-			new Pufferfish('pufferfish', 1900, 400),
+			new Pufferfish_Pink('pufferfish'),
 		],
 		[
 			new BackgroundObject('img/3. Background/Layers/5. Water/D1.png', 0, 480),
@@ -61,7 +61,13 @@ function initLevel() {
 			new BackgroundObject('img/3. Background/Layers/4.Fondo 2/D2.png', 720 * 3, 500),
 			new BackgroundObject('img/3. Background/Layers/3.Fondo 1/D2.png', 720 * 3, 500),
 			new BackgroundObject('img/3. Background/Layers/2. Floor/D2.png', 720 * 3, 500),
-			new BackgroundObject('img/3. Background/Layers/1. Light/2.png', 720 * 3, 480)
+			new BackgroundObject('img/3. Background/Layers/1. Light/2.png', 720 * 3, 480),
+
+			new BackgroundObject('img/3. Background/Layers/5. Water/D1.png', 720 * 4, 480),
+			new BackgroundObject('img/3. Background/Layers/4.Fondo 2/D1.png', 720 * 4, 500),
+			new BackgroundObject('img/3. Background/Layers/3.Fondo 1/D1.png', 720 * 4, 500),
+			new BackgroundObject('img/3. Background/Layers/2. Floor/D1.png', 720 * 4, 500),
+			new BackgroundObject('img/3. Background/Layers/1. Light/1.png', 720 * 4, 480),
 		],
 		[
 			new Coins(500, 350),

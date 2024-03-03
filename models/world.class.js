@@ -24,6 +24,7 @@ class World {
 	camera_x = 0;
 	time_standing;
 	sound_is_muted = false;
+	paused = false;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -45,6 +46,13 @@ class World {
 	setWorld() {
 		this.character.world = this;
 		this.endboss.world = this;
+
+		setInterval(() => {
+			this.endboss.positionCharacterX = this.character.position_x;
+			this.endboss.positionCharacterY = this.character.position_y - this.character.height;
+			this.level.enemies[25].positionCharacterX = this.character.position_x;
+			this.level.enemies[25].positionCharacterY = this.character.position_y;
+		}, 300);
 	}
 
 	draw() {
@@ -110,7 +118,7 @@ class World {
 		this.ctx.save(); //Aktuellen status des context speichern
 		this.ctx.translate(mo.width, 0); //dreht das Bild, x und y Achse
 		this.ctx.scale(-1, 1); //Spiegeln die Bilder und drehen sie bei der X-Achse um
-		mo.position_x = mo.position_x * -1;
+		mo.position_x = mo.position_x * -1; //Somit bleibt das Bild an genau der X Koordinate, an der wir das Bild gedreht haben
 	}
 
 	flipImageBack(mo) {
@@ -138,6 +146,9 @@ class World {
 						enemy.jellyfishIsHitted();
 						this.bubble_poisons.splice(bubble_poison, 1);
 					}
+					if(this.character.isColliding(enemy) && enemy['enemy_spezies'] == 'pufferfish') {
+						enemy.pufferfishIsHitted();
+					}
 				})
 			})
 		}, 1000);
@@ -151,14 +162,16 @@ class World {
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
 				}
 			})
+			if(this.character.isColliding(this.endboss)) {
+				this.character.hit(5);
+				this.statusbar_energy.setPercentageHeart(this.character.energy);
+			}
 		}, 1000);
 	}
 
 	getCoins() {
 		setInterval(() => {
-			if(!this.sound_is_muted) {
-				sounds.coin_audio.pause();
-			}
+			sounds.coin_audio.pause();
 			sounds.coin_audio.currentTime = 0;
 			// Iteriere über alle Münzen im Level
 			for (let i = 0; i < this.level.coins.length; i++) {
@@ -184,18 +197,18 @@ class World {
 
 	getPoison() {
 		setInterval(() => {
-			if(!this.sound_is_muted) {
-				sounds.poison_audio.pause();
-			}
-			sounds.poison_audio.currentTime = 0;
+			sounds.poison_audio.pause();
 			for (let i = 0; i < this.poisons.length; i++) {
 				let poison = this.poisons[i];
 				if (this.character.isColliding(poison)) {
 					this.poisons.splice(i, 1);
 					this.character.getPoison();
-					if(!this.sound_is_muted) {
-						sounds.poison_audio.play();
-					}
+					sounds.poison_audio.currentTime = 0;
+					setTimeout(() => {
+						if(!this.sound_is_muted) {
+							sounds.poison_audio.play();
+						}
+					}, 100); // Starten Sie den Sound mit einer Verzögerung von 100 Millisekunden
 					this.statusbar_poison.setPercentagePoison(this.character.poison);
 					i--;
 				}
@@ -206,6 +219,11 @@ class World {
 	animateEndboss() {
 		setInterval(() => {
 			if(this.character.position_x > 2090) {
+				if(this.endboss.firstContact && !this.sound_is_muted) {
+					sounds.background_audio.pause();
+					sounds.action_audio.play();
+					sounds.action_audio.loop = true;
+				}
 				this.endboss.firstContactEndboss();
 			}
 		}, 200);
@@ -223,18 +241,80 @@ class World {
 	}
 
 	addBackgroundSound() {
-		setInterval(() => {
-			if(!this.sound_is_muted || !this.endboss.firstContact) {
-				sounds.background_audio.play();
-			}
-		}, 300);
+		sounds.background_audio.play();
+		sounds.background_audio.loop = true;
 	}
 
 	playAudios() {
+		if(this.character.position_x > 2090 || this.endboss.firstContact) {
+			sounds.action_audio.play();
+			sounds.action_audio.loop = true;
+		} else {
+			sounds.background_audio.play();
+			sounds.background_audio.loop = true;
+		}
 		this.sound_is_muted = false;
     }
 
 	muteAudios() {
+		sounds.background_audio.pause();
+		sounds.background_audio.loop = false;
+		sounds.action_audio.pause();
+		sounds.action_audio.loop = false;
+
 		this.sound_is_muted = true;
+		sounds.electricity_audio.pause();
     }
+
+	// togglePause() {
+	// 	if(!this.paused) {
+	// 		this.pauseGame();
+	// 	} else if(this.paused) {
+	// 		this.resumeGame();
+	// 	}
+	// }
+
+	// pauseGame() {
+    //     // Hintergrundsound anhalten
+    //     if (!this.endboss.firstContact) {
+    //         sounds.background_audio.pause();
+    //     } else {
+    //         sounds.action_audio.pause();
+    //     }
+
+    //     // Alle Intervalle stoppen
+    //     clearInterval(this.checkAttacksInterval);
+    //     clearInterval(this.checkAttackOnJellyfishInterval);
+    //     clearInterval(this.checkCollisionsInterval);
+    //     clearInterval(this.getCoinsInterval);
+    //     clearInterval(this.getPoisonInterval);
+    //     clearInterval(this.animateEndbossInterval);
+    //     clearInterval(this.checkAttackOnEndbossInterval);
+
+    //     // Animationen pausieren
+    //     this.paused = true;
+    // }
+
+    // resumeGame() {
+    //     // Hintergrundsound fortsetzen
+    //     if (!this.endboss.firstContact) {
+    //         sounds.background_audio.play();
+    //     } else {
+    //         sounds.action_audio.play();
+    //     }
+
+    //     // Intervalle wieder starten
+    //     this.checkAttacksInterval = setInterval(() => {
+    //         // Ihre Funktion für checkAttacks
+    //     }, 1000);
+
+    //     this.checkAttackOnJellyfishInterval = setInterval(() => {
+    //         // Ihre Funktion für checkAttackOnJellyfish
+    //     }, 1000);
+
+    //     // Weitere Intervalle hier starten...
+
+    //     // Animationen fortsetzen
+    //     this.paused = false;
+    // }
 }

@@ -53,6 +53,16 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/5.Hurt/2.Electric_shock/o1.png',
 		'img/1.Sharkie/5.Hurt/2.Electric_shock/o2.png',
 	];
+	IMAGES_ATTACKPUFFERFISH = [
+		'img/1.Sharkie/4.Attack/Fin slap/1.png',
+		'img/1.Sharkie/4.Attack/Fin slap/2.png',
+		'img/1.Sharkie/4.Attack/Fin slap/3.png',
+		'img/1.Sharkie/4.Attack/Fin slap/4.png',
+		'img/1.Sharkie/4.Attack/Fin slap/5.png',
+		'img/1.Sharkie/4.Attack/Fin slap/6.png',
+		'img/1.Sharkie/4.Attack/Fin slap/7.png',
+		'img/1.Sharkie/4.Attack/Fin slap/8.png',
+	]
 	IMAGES_DEAD = [
 		'img/1.Sharkie/6.dead/1.Poisoned/1.png',
 		'img/1.Sharkie/6.dead/1.Poisoned/2.png',
@@ -87,7 +97,6 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
 	];
 	world;
-	swimming_sound = new Audio('audio/swim.mp3');
 
 	constructor() {
 		super().loadImage('img/1.Sharkie/1.IDLE/1.png');
@@ -97,18 +106,18 @@ class Character extends MoveableObject {
 		this.loadImages(this.IMAGES_DEAD);
 		this.loadImages(this.IMAGES_HITTINGPUFFERFISH);
 		this.loadImages(this.IMAGES_HITTINGJELLYFISH);
+		this.loadImages(this.IMAGES_ATTACKPUFFERFISH);
 		this.loadImages(this.IMAGES_BUBBLE_POISON);
 		this.loadImages(this.IMAGES_BUBBLE);
 		this.height = 200;
 		this.width = 200;
 
 		this.animate();
-		// this.collision_pufferfish();
 	}
 
 	animate() {
 		setInterval(() => {
-			this.swimming_sound.pause();
+			sounds.sharkie_swimming.pause();
 			if(this.world.keyboard.key_right && this.position_x < this.world.level.level_end_x) {
 				//Change x position
 				this.position_x += 10;
@@ -154,6 +163,8 @@ class Character extends MoveableObject {
 				} else {
 					this.playAnimation(this.IMAGES_BUBBLE_POISON);
 				}
+			} else if(this.world.keyboard.key_space) {
+				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH);
 			} else {
 				if(!this.world.keyboard.key_right && this.timeTired()) {
 					this.playAnimation(this.IMAGES_TIRED);
@@ -166,7 +177,7 @@ class Character extends MoveableObject {
 
 	playSound() {
 		if(!this.world.sound_is_muted) {
-			this.swimming_sound.play();
+			sounds.sharkie_swimming.play();
 		}
 	}
 

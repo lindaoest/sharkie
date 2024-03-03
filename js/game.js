@@ -15,6 +15,7 @@ function init() {
 		'action_audio': new Audio('audio/action-sound.mp3'),
 		'whale_audio': new Audio('audio/whale.mp3'),
 		'electricity_audio': new Audio('audio/electricity.mp3'),
+		'sharkie_swimming': new Audio('audio/swim.mp3')
 	}
 
 	world = new World(canvas, keyboard, time_standing);
@@ -110,20 +111,13 @@ function playAudio() {
 	playAudio.style.display = 'flex';
 }
 
-function playGame() {
+function toggleGame() {
 	let pauseGame = document.getElementById('pause-game');
 	let playGame = document.getElementById('play-game');
 
-	pauseGame.style.display = 'none';
-	playGame.style.display = 'flex';
-}
-
-function pauseGame() {
-	let pauseGame = document.getElementById('pause-game');
-	let playGame = document.getElementById('play-game');
-
-	pauseGame.style.display = 'flex';
-	playGame.style.display = 'none';
+	pauseGame.classList.toggle('d-none');
+	playGame.classList.toggle('d-none');
+	world.togglePause();
 }
 
 function openControls() {

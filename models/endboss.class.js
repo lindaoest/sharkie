@@ -25,6 +25,12 @@ class Endboss extends MoveableObject {
 		'img/2.Enemy/3 Final Enemy/2.floating/11.png',
 		'img/2.Enemy/3 Final Enemy/2.floating/12.png',
 		'img/2.Enemy/3 Final Enemy/2.floating/13.png',
+		'img/2.Enemy/3 Final Enemy/Attack/1.png',
+		'img/2.Enemy/3 Final Enemy/Attack/2.png',
+		'img/2.Enemy/3 Final Enemy/Attack/3.png',
+		'img/2.Enemy/3 Final Enemy/Attack/4.png',
+		'img/2.Enemy/3 Final Enemy/Attack/5.png',
+		'img/2.Enemy/3 Final Enemy/Attack/6.png',
 	];
 	IMAGES_HURT = [
 		'img/2.Enemy/3 Final Enemy/Hurt/1.png',
@@ -48,6 +54,10 @@ class Endboss extends MoveableObject {
 		'img/2.Enemy/3 Final Enemy/Attack/6.png',
 	];
 	world;
+	diffX;
+	diffY;
+	stepX;
+	stepY;
 
 	constructor() {
 		super().loadImage('img/2.Enemy/3 Final Enemy/1.Introduce/1.png');
@@ -58,13 +68,11 @@ class Endboss extends MoveableObject {
 		this.loadImages(this.IMAGES_ATTACK);
 		this.position_x = 2500;
 		this.position_y = 0;
-		this.attackInterval = 0;
 		this.animate();
 	}
 
 	animate() {
-		let i = 0;
-		sounds.action_audio.pause();
+		sounds.whale_audio.pause();
 		setInterval(() => {
 			if(!this.firstContact) {
 				this.playAnimation(this.IMAGES_SWIMMING);
@@ -74,26 +82,14 @@ class Endboss extends MoveableObject {
 				this.playAnimation(this.IMAGES_DEAD);
 				this.endbossHitted = false;
 			} else {
-				if (this.attackInterval >= 2) { // Prüfen, ob 3 Sekunden vergangen sind
+                this.playAnimation(this.IMAGES_FLOATING);
+				setTimeout(() => {
 					if(!this.world.sound_is_muted) {
 						sounds.whale_audio.play();
 					}
-                    this.playAnimation(this.IMAGES_ATTACK);
-                    this.attackInterval = 0; // Zurücksetzen des Intervalls
-					this.position_x -= 10;
-                } else {
-					if(!this.world.sound_is_muted) {
-						sounds.action_audio.play();
-					}
-                    this.playAnimation(this.IMAGES_FLOATING);
-                    this.attackInterval += 0.2; // Erhöhen des Intervalls um 0.2 Sekunden (Intervallzeit = 200ms)
-                }
+				}, 5000);
+				this.checkDifferenz();
 			}
-			i++;
-
-
-
-			//if character.position_x > 2000 && firstContact dann setzte i auf 0 und firstCotnact auf true
 		}, 200);
 	}
 
@@ -102,5 +98,25 @@ class Endboss extends MoveableObject {
 		setTimeout(() => {
 			this.endbossHitted = false;
 		}, 2000);
+	}
+
+	checkDifferenz() {
+		// Unterschiede zwischen Endboss- und Zielkoordinaten berechnen
+		this.diffX = this.positionCharacterX - this.position_x;
+		this.diffY = this.positionCharacterY - this.position_y;
+
+		// Die Schrittgröße für die Bewegung des Endbosses festlegen
+		this.stepX = this.diffX > 0 ? Math.min(10, this.diffX) : Math.max(-10, this.diffX);
+		this.stepY = this.diffY > 0 ? Math.min(10, this.diffY) : Math.max(-10, this.diffY);
+
+		if(this.stepX > 0) {
+			this.otherDirection = true;
+		} else {
+			this.otherDirection = false;
+		}
+
+		// Endboss-Position aktualisieren
+		this.position_x += this.stepX;
+		this.position_y += this.stepY;
 	}
 }

@@ -6,6 +6,11 @@ class Pufferfish extends MoveableObject {
 		'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
 		'img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png',
 	];
+	IMAGES_DEAD = [
+		'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png',
+		'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2 (can animate by going up).png',
+		'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3 (can animate by going up).png',
+	];
 	enemy_spezies = '';
 
 	constructor(spezies, position_x, position_y) {
@@ -26,7 +31,11 @@ class Pufferfish extends MoveableObject {
 		this.speed = 0.15 + Math.random() * 0.25;
 
 		setInterval(() => {
-			this.playAnimation(this.IMAGES_SWIMMING);
+			if(this.pufferfishDead) {
+				this.playAnimation(this.IMAGES_DEAD);
+			} else {
+				this.playAnimation(this.IMAGES_SWIMMING);
+			}
 		}, 200);
 	}
 }

@@ -9,6 +9,7 @@
 	<script src="./models/moveable-object.class.js"></script>
 	<script src="./models/character.class.js"></script>
 	<script src="./models/pufferfish.class.js"></script>
+	<script src="./models/pufferfish-pink.class.js"></script>
 	<script src="./models/jellyfish.class.js"></script>
 	<script src="./models/jellyfish-purple.class.js"></script>
 	<script src="./models/jellyfish-super-dangerous.class.js"></script>
@@ -77,8 +78,8 @@
 				<img onclick="closeInstructions()" id="instructions-close" class="instructions-close d-none" src="./icons/close.svg" alt="">
 			</div>
 			<div class="audio">
-				<img onclick="pauseGame()" id="play-game" src="./icons/play.svg" alt="">
-				<img onclick="playGame()" id="pause-game" src="./icons/pause.svg" alt="">
+				<img onclick="toggleGame()" id="play-game" class="d-none" src="./icons/play.svg" alt="">
+				<img onclick="toggleGame()" id="pause-game" src="./icons/pause.svg" alt="">
 			</div>
 			<div class="play-button">
 				<img onclick="muteAudio()" id="play-audio" src="./icons/audio.svg" alt="">
