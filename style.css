@@ -43,7 +43,8 @@ canvas {
 }
 .startScreen {
 	background-image: url('img/3. Background/Mesa de trabajo 1.png');
-	background-size: contain;
+	background-repeat: no-repeat;
+	background-size: cover;
     border-radius: 25px;
 	position: absolute;
 	top: 0;
@@ -120,6 +121,36 @@ canvas {
 }
 .menu #mute-audio {
 	display: none;
+}
+.touchbars {
+	position: absolute;
+    bottom: 0;
+    left: 0;
+	display: none;
+}
+.touchbars > * {
+	width: 60px;
+	height: 60px;
+}
+.touchbars #btnLeft {
+	margin-top: 70px;
+}
+.touchbars #btnUp {
+	margin-bottom: 70px;
+	margin-left: 10px;
+}
+.touchbars #btnDown {
+	margin-top: 70px;
+    margin-left: -60px;
+}
+.touchbars #btnRight {
+	margin-top: 70px;
+	margin-left: 10px;
+}
+.touchbars #btnD,
+.touchbars #btnSpace {
+	margin-left: 10px;
+    margin-top: 70px;
 }
 
 @media screen and (max-width: 720px) {

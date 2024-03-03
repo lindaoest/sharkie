@@ -32,10 +32,30 @@
 </head>
 <body>
 	<h1>Sharky</h1>
-	<div class="canvas-container">
+	<div id="fullscreen-modus" class="canvas-container">
 		<canvas id="canvas" width="720" height="480"></canvas>
 		<div class="startScreen">
 			<img onclick="startGame()" class="startButton" src="./img/6.Botones/Start/2.png" alt="">
+		</div>
+		<div id="touchbars" class="touchbars">
+			<div id="btnLeft">
+				<img src="./icons/touch-left.svg" alt="">
+			</div>
+			<div id="btnUp">
+				<img src="./icons/touch-up.svg" alt="">
+			</div>
+			<div id="btnDown">
+				<img src="./icons/touch-down.svg" alt="">
+			</div>
+			<div id="btnRight">
+				<img src="./icons/touch-right.svg" alt="">
+			</div>
+			<div id="btnD">
+				<img src="./icons/shoot-bubbles.svg" alt="">
+			</div>
+			<div id="btnSpace">
+				<img src="./icons/slap.svg" alt="">
+			</div>
 		</div>
 		<div id="instructions" class="overlay instructions">
 			<div class="titles flex">
@@ -70,8 +90,11 @@
 			</div>
 		</div>
 		<div class="overlay menu">
-			<div onclick="openFullscreen()" class="fullscreen">
+			<div onclick="openFullscreen()" id="fullscreen" class="fullscreen">
 				<img src="./icons/fullscreen.svg" alt="">
+			</div>
+			<div onclick="closeFullscreen()" id="exit-fullscreen" class="exit-fullscreen d-none">
+				<img src="./icons/miniscreen.svg" alt="">
 			</div>
 			<div class="instructions-menu">
 				<img onclick="openInstructions()" id="instructions-open" class="instructions-open" src="./icons/instructions.svg" alt="">

@@ -112,6 +112,13 @@ class Character extends MoveableObject {
 		this.height = 200;
 		this.width = 200;
 
+		this.offset = {
+			top: 120,
+			right: 40,
+			bottom: 80,
+			left: 40
+		};
+
 		this.animate();
 	}
 
