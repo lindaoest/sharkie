@@ -11,8 +11,6 @@ class Jellyfish_Dangerous extends MoveableObject {
 		'img/2.Enemy/2 Jelly fish/Dead/Pink/P3.png',
 		'img/2.Enemy/2 Jelly fish/Dead/Pink/P4.png',
 	];
-	enemy_spezies = '';
-
 
 	constructor(spezies, position_x, position_y) {
 		super().loadImage('img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png');
@@ -30,17 +28,22 @@ class Jellyfish_Dangerous extends MoveableObject {
 	animate() {
 		this.moveLeft();
 		this.speed = 0.15;
+		setInterval(() => this.playJellyfish(), 200);
+	}
 
-		setInterval(() => {
-			if(!pauseGame) {
-				if(this.jellyfishDead) {
-					this.playAnimation(this.IMAGES_DEAD_DANGEROUS);
-					this.position_x += 20;
-					this.position_y += -20;
-				} else {
-					this.playAnimation(this.IMAGES_SWIMMING)
-				}
+	playJellyfish() {
+		if(!pauseGame) {
+			if(this.jellyfishDead) {
+				this.jellyfishDeadAnimation();
+			} else {
+				this.playAnimation(this.IMAGES_SWIMMING)
 			}
-		}, 200);
+		}
+	}
+
+	jellyfishDeadAnimation() {
+		this.playAnimation(this.IMAGES_DEAD_DANGEROUS);
+		this.position_x += 20;
+		this.position_y += -20;
 	}
 }

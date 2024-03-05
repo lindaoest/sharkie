@@ -15,6 +15,8 @@ class MoveableObject extends DrawableObject {
 	hurtPufferfish = false;
 	bubbleOtherDirection = false;
 	intervalIds = [];
+	enemy_spezies = '';
+	changeDirection = false;
 
 	offset = {
 		top: 0,
@@ -26,7 +28,6 @@ class MoveableObject extends DrawableObject {
 	moveLeft() {
 		setInterval(() => {
 			if(!pauseGame) {
-				//this.position_x -= 0.15 + Math.random() * 0.25;
 				this.position_x -= this.speed;
 			}
 		}, 1000 / 60);
@@ -38,14 +39,13 @@ class MoveableObject extends DrawableObject {
 		return  (this.position_x + this.width) - this.offset.right >= obj.position_x &&
 				this.position_x + this.offset.left <= (obj.position_x + obj.width) &&
 				(this.position_y + this.height)  - this.offset.bottom >= obj.position_y &&
-				(this.position_y + this.offset.top) <= (obj.position_y + obj.height) //&&
+				this.position_y + this.offset.top <= (obj.position_y + obj.height) //&&
 				//obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
 	}
 
 	hit(energy, spezies) {
 		this.energy -= energy;
-		// console.log('Collision', this.energy);
 		if(this.energy < 0) {
 			this.energy = 0;
 		} else {
@@ -81,7 +81,7 @@ class MoveableObject extends DrawableObject {
 		this.pufferfishDead = true;
 	}
 
-	// returned entweder true oder false
+	// return true or false
 	isDead() {
 		return this.energy == 0;
 	}
@@ -102,5 +102,27 @@ class MoveableObject extends DrawableObject {
 	setStoppableInterval(fn, time) {
 		let id = setInterval(fn, time);
 		this.intervalIds.push(id);
-	  }
+	}
+
+	checkDifferenz() {
+		if(this.positionCharacterX != undefined && this.positionCharacterY != undefined) {
+			// Unterschiede zwischen Endboss- und Zielkoordinaten berechnen
+			this.diffX = this.positionCharacterX - this.position_x;
+			this.diffY = this.positionCharacterY - this.position_y;
+
+			// Die Schrittgröße für die Bewegung des Endbosses festlegen
+			this.stepX = this.diffX > 0 ? Math.min(10, this.diffX) : Math.max(-10, this.diffX);
+			this.stepY = this.diffY > 0 ? Math.min(10, this.diffY) : Math.max(-10, this.diffY);
+
+			if(this.stepX > 0) {
+				this.otherDirection = true;
+			} else {
+				this.otherDirection = false;
+			}
+
+			// Endboss-Position aktualisieren
+			this.position_x += this.stepX;
+			this.position_y += this.stepY;
+		}
+	}
 }

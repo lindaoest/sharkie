@@ -11,7 +11,6 @@ class Pufferfish extends MoveableObject {
 		'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2 (can animate by going down to the floor after the Fin Slap attack).png',
 		'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3 (can animate by going down to the floor after the Fin Slap attack).png',
 	];
-	enemy_spezies = '';
 
 	constructor(spezies, position_x, position_y) {
 		super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
@@ -32,15 +31,23 @@ class Pufferfish extends MoveableObject {
 		this.speed = 0.15 + Math.random() * 0.25;
 
 		setInterval(() => {
-			if(!pauseGame) {
-				if(this.pufferfishDead) {
-					this.playAnimation(this.IMAGES_DEAD);
-					this.position_x -= 40;
-					this.position_y -= 40;
-				} else {
-					this.playAnimation(this.IMAGES_SWIMMING);
-				}
-			}
+			this.playPufferfish();
 		}, 200);
+	}
+
+	playPufferfish() {
+		if(!pauseGame) {
+			if(this.pufferfishDead) {
+				this.deadAnimation();
+			} else {
+				this.playAnimation(this.IMAGES_SWIMMING);
+			}
+		}
+	}
+
+	deadAnimation() {
+		this.playAnimation(this.IMAGES_DEAD);
+		this.position_x -= 40;
+		this.position_y -= 40;
 	}
 }

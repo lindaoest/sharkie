@@ -73,26 +73,28 @@ class Endboss extends MoveableObject {
 
 	animate() {
 		sounds.whale_audio.pause();
-		setInterval(() => {
-			if(!pauseGame) {
-				if(!this.firstContact) {
-					this.playAnimation(this.IMAGES_SWIMMING);
-				} else if(this.endbossHitted) {
-					this.playHurtAnimation();
-				} else if(this.energy == 0) {
-					this.playAnimation(this.IMAGES_DEAD);
-					this.endbossHitted = false;
-				} else {
-					this.playAnimation(this.IMAGES_FLOATING);
-					setTimeout(() => {
-						if(!this.world.sound_is_muted) {
-							sounds.whale_audio.play();
-						}
-					}, 5000);
-					this.checkDifferenz();
-				}
+		setInterval(() => this.playEndboss(), 200);
+	}
+
+	playEndboss() {
+		if(!pauseGame) {
+			if(!this.firstContact) {
+				this.playAnimation(this.IMAGES_SWIMMING);
+			} else if(this.endbossHitted) {
+				this.playHurtAnimation();
+			} else if(this.energy == 0) {
+				this.playAnimation(this.IMAGES_DEAD);
+				this.endbossHitted = false;
+			} else {
+				this.playAnimation(this.IMAGES_FLOATING);
+				setTimeout(() => {
+					if(!this.world.sound_is_muted) {
+						sounds.whale_audio.play();
+					}
+				}, 5000);
+				this.checkDifferenz();
 			}
-		}, 200);
+		}
 	}
 
 	playHurtAnimation() {
@@ -100,25 +102,5 @@ class Endboss extends MoveableObject {
 		setTimeout(() => {
 			this.endbossHitted = false;
 		}, 2000);
-	}
-
-	checkDifferenz() {
-		// Unterschiede zwischen Endboss- und Zielkoordinaten berechnen
-		this.diffX = this.positionCharacterX - this.position_x;
-		this.diffY = this.positionCharacterY - this.position_y;
-
-		// Die Schrittgröße für die Bewegung des Endbosses festlegen
-		this.stepX = this.diffX > 0 ? Math.min(10, this.diffX) : Math.max(-10, this.diffX);
-		this.stepY = this.diffY > 0 ? Math.min(10, this.diffY) : Math.max(-10, this.diffY);
-
-		if(this.stepX > 0) {
-			this.otherDirection = true;
-		} else {
-			this.otherDirection = false;
-		}
-
-		// Endboss-Position aktualisieren
-		this.position_x += this.stepX;
-		this.position_y += this.stepY;
 	}
 }

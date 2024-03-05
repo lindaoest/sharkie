@@ -101,15 +101,7 @@ class World {
 			this.flipImage(mo);
 		}
 
-		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height);//zeichnet auf das Canvas Board
-
-		if(mo instanceof Character) {
-			this.ctx.beginPath();
-			this.ctx.lineWidth = '5';
-			this.ctx.strokeStyle = 'blue';
-			this.ctx.rect(mo.position_x, mo.position_y, mo.width, mo.height);
-			this.ctx.stroke();
-		}
+		this.ctx.drawImage(mo.img, mo.position_x, mo.position_y, mo.width, mo.height); //zeichnet auf das Canvas Board
 
 		if(mo.otherDirection || mo.bubbleOtherDirection) {
 			this.flipImageBack(mo);

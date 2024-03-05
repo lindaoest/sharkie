@@ -113,9 +113,9 @@ class Character extends MoveableObject {
 		this.width = 200;
 
 		this.offset = {
-			top: 120,
+			top: 100,
 			right: 40,
-			bottom: 80,
+			bottom: 50,
 			left: 40
 		};
 
@@ -174,34 +174,56 @@ class Character extends MoveableObject {
 				sounds.electricity_audio.pause();
 			}
 			if(this.isDead()) {
-				//Dead Animation
-				this.playAnimation(this.IMAGES_DEAD);
-			} else if(this.isHurt() && this.hitPufferfish()) {
-				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH);
-			} else if(this.isHurt() && this.hitJellyfish()) {
+				this.playAnimation(this.IMAGES_DEAD); //Dead Animation
+			} else if(this.isSharkieHurtPufferfish()) {
+				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH); //Hurt from Pufferfish Animation
+			} else if(this.isSharkieHurtJellyfish()) {
 				if(!this.world.sound_is_muted) {
 					sounds.electricity_audio.play();
 				}
-				this.playAnimation(this.IMAGES_HITTINGJELLYFISH);
-			} else if(this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down) {
-				//Swim Animation
-				this.playAnimation(this.IMAGES_SWIMMING);
-			} else if(this.world.keyboard.key_attack) {
+				this.playAnimation(this.IMAGES_HITTINGJELLYFISH); //Hurt from Jellyfish Animation
+			} else if(this.isSharkieSwimming()) {
+				this.playAnimation(this.IMAGES_SWIMMING); //Swim Animation
+			} else if(this.isSharkieAttackingJellyfish()) {
 				if(this.poison == 0) {
 					this.playAnimation(this.IMAGES_BUBBLE);
 				} else {
-					this.playAnimation(this.IMAGES_BUBBLE_POISON);
+					this.playAnimation(this.IMAGES_BUBBLE_POISON); //Attack Jellyfish Animation
 				}
-			} else if(this.world.keyboard.key_space) {
-				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH);
+			} else if(this.isSharkieAttackingPufferfish()) {
+				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH); //Attack Pufferfish Animation
 			} else {
-				if(!this.world.keyboard.key_right && this.timeTired()) {
-					this.playAnimation(this.IMAGES_TIRED);
+				if(this.isSharkieTired()) {
+					this.playAnimation(this.IMAGES_TIRED); //Tired Animation
 				} else {
-					this.playAnimation(this.IMAGES_STANDING);
+					this.playAnimation(this.IMAGES_STANDING); //Standing Animation
 				}
 			}
 		}
+	}
+
+	isSharkieHurtPufferfish() {
+		return this.isHurt() && this.hitPufferfish();
+	}
+
+	isSharkieHurtJellyfish() {
+		return this.isHurt() && this.hitJellyfish();
+	}
+
+	isSharkieSwimming() {
+		return this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down;
+	}
+
+	isSharkieAttackingJellyfish() {
+		return this.world.keyboard.key_attack;
+	}
+
+	isSharkieAttackingPufferfish() {
+		return this.world.keyboard.key_space;
+	}
+
+	isSharkieTired() {
+		return !this.world.keyboard.key_right && this.timeTired();
 	}
 
 	playSound() {
