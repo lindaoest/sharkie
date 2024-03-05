@@ -14,7 +14,11 @@ class BubblePoison extends MoveableObject {
 
 	animate() {
 		setInterval(() => {
-			this.position_x += 10;
+			if(this.bubbleOtherDirection) {
+				this.position_x -= 10;
+			} else {
+				this.position_x += 10;
+			}
 			this.position_y -= 2;
 		}, 100);
 	}

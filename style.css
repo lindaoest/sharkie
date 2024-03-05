@@ -41,8 +41,9 @@ canvas {
 	border-radius: 25px;
 	box-shadow: 0px 0px 15px white;
 }
-.startScreen {
-	background-image: url('img/3. Background/Mesa de trabajo 1.png');
+.startScreen,
+.gameoverScreen,
+.youwinScreen {
 	background-repeat: no-repeat;
 	background-size: cover;
     border-radius: 25px;
@@ -51,6 +52,42 @@ canvas {
 	left: 0;
 	height: 100%;
     width: 100%;
+}
+.startScreen {
+	background-image: url('img/3. Background/Mesa de trabajo 1.png');
+}
+.gameoverScreen {
+	background-image: url('img/3. Background/Dark/2.png');
+	display: none;
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+	z-index: 5;
+}
+.gameoverScreen img:first-child {
+	width: 62%;
+}
+.gameoverScreen img:last-child {
+	width: 30%;
+	padding-top: 32px;
+}
+.youwinScreen {
+	background-image: url('img/3. Background/Dark/2.png');
+	z-index: 5;
+	display: none;
+}
+.youwinScreen img:first-child {
+	width: 100%;
+	height: 100%;
+	border-radius: 25px;
+}
+.youwinScreen img:last-child {
+	position: absolute;
+    bottom: 14%;
+    left: 0;
+	right: 0;
+    width: 40%;
+    margin: 0 auto;
 }
 .startButton {
 	position: absolute;

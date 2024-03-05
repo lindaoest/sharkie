@@ -41,17 +41,20 @@ class World {
 		this.animateEndboss();
 		this.checkAttackOnEndboss();
 		this.addBackgroundSound();
+		this.checkEnergy();
+		this.checkOtherDirectionBubble();
 	}
 
 	setWorld() {
 		this.character.world = this;
 		this.endboss.world = this;
+		this.bubble_poisons.world = this;
 
 		setInterval(() => {
 			this.endboss.positionCharacterX = this.character.position_x;
 			this.endboss.positionCharacterY = this.character.position_y - this.character.height;
-			this.level.enemies[25].positionCharacterX = this.character.position_x;
-			this.level.enemies[25].positionCharacterY = this.character.position_y;
+			this.level.enemies[25].positionCharacterX = this.character.position_x + 50;
+			this.level.enemies[25].positionCharacterY = this.character.position_y + 80;
 		}, 300);
 	}
 
@@ -146,9 +149,6 @@ class World {
 						enemy.jellyfishIsHitted();
 						this.bubble_poisons.splice(bubble_poison, 1);
 					}
-					if(this.character.isColliding(enemy) && enemy['enemy_spezies'] == 'pufferfish') {
-						enemy.pufferfishIsHitted();
-					}
 				})
 			})
 		}, 1000);
@@ -160,6 +160,11 @@ class World {
 				if(this.character.isColliding(enemy)) {
 					this.character.hit(5, enemy.enemy_spezies);
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
+				}
+				if(this.character.isColliding(enemy) && enemy['enemy_spezies'] == 'pufferfish') {
+					if(enemy.hurtPufferfish) {
+						enemy.pufferfishIsHitted();
+					}
 				}
 			})
 			if(this.character.isColliding(this.endboss)) {
@@ -216,6 +221,16 @@ class World {
 		}, 200);
 	}
 
+	checkOtherDirectionBubble() {
+		setInterval(() => {
+			if(this.character.otherDirection) {
+				this.bubble_poisons.forEach((bubble_poison) => {
+					bubble_poison.bubbleOtherDirection = true;
+				})
+			}
+		}, 200);
+	}
+
 	animateEndboss() {
 		setInterval(() => {
 			if(this.character.position_x > 2090) {
@@ -265,6 +280,20 @@ class World {
 		this.sound_is_muted = true;
 		sounds.electricity_audio.pause();
     }
+
+	checkEnergy() {
+		setInterval(() => {
+			if(this.character.energy <= 0) {
+				setTimeout(() => {
+					document.getElementById('gameover').style.display = 'flex';
+				}, 2000);
+			} else if(this.endboss.energy <= 0) {
+				setTimeout(() => {
+					document.getElementById('youwin').style.display = 'flex';
+				}, 2000)
+			}
+		}, 200);
+	}
 
 	// togglePause() {
 	// 	if(!this.paused) {

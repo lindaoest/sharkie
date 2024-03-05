@@ -136,11 +136,11 @@ class Character extends MoveableObject {
 				this.otherDirection = true;
 				this.playSound();
 			}
-			if(this.world.keyboard.key_up && this.position_y > -140) {
+			if(this.world.keyboard.key_up && this.position_y > -100) {
 				this.position_y -= 10;
 				this.playSound();
 			}
-			if(this.world.keyboard.key_down && this.position_y < 250) {
+			if(this.world.keyboard.key_down && this.position_y < 330) {
 				this.position_y += 10;
 				this.playSound();
 			}

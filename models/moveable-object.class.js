@@ -12,6 +12,8 @@ class MoveableObject extends DrawableObject {
 	poison = 0;
 	positionCharacterX;
 	positionCharacterY;
+	hurtPufferfish = false;
+	bubbleOtherDirection = false;
 
 	offset = {
 		top: 0,
@@ -73,7 +75,7 @@ class MoveableObject extends DrawableObject {
 	}
 
 	pufferfishIsHitted() {
-		this.jellyfishDead = true;
+		this.pufferfishDead = true;
 	}
 
 	// returned entweder true oder false
