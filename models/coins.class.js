@@ -20,7 +20,9 @@ class Coins extends MoveableObject {
 
 	animate() {
 		setInterval(() => {
-			this.playAnimation(this.IMAGES_SPINNING);
+			if(!pauseGame) {
+				this.playAnimation(this.IMAGES_SPINNING);
+			}
 		}, 400);
 	}
 }

@@ -32,16 +32,17 @@ class Pufferfish_Pink extends MoveableObject {
 	}
 
 	animate() {
-
 		setInterval(() => {
-			if(this.pufferfishDead) {
-				this.playAnimation(this.IMAGES_DEAD);
-				this.position_x -= 40;
-				this.position_y -= 40;
-			} else {
-				this.playAnimation(this.IMAGES_SWIMMING);
+			if(!pauseGame) {
+				if(this.pufferfishDead) {
+					this.playAnimation(this.IMAGES_DEAD);
+					this.position_x -= 40;
+					this.position_y -= 40;
+				} else {
+					this.playAnimation(this.IMAGES_SWIMMING);
+				}
+				this.checkDifferenz();
 			}
-			this.checkDifferenz();
 		}, 200);
 	}
 

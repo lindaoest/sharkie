@@ -39,11 +39,11 @@
 		</div>
 		<div id="gameover" class="gameoverScreen">
 			<img src="./img/6.Botones/Tittles/Game Over/Recurso 9.png" alt="">
-			<img src="./img/6.Botones/Try again/Recurso 15.png" alt="">
+			<img onclick="clearAllIntervals()" src="./img/6.Botones/Try again/Recurso 15.png" alt="">
 		</div>
 		<div id="youwin" class="youwinScreen">
 			<img src="./img/6.Botones/Tittles/You win/Mesa de trabajo 1.png" alt="">
-			<img src="./img/6.Botones/Try again/Recurso 15.png" alt="">
+			<img onclick="clearAllIntervals()" src="./img/6.Botones/Try again/Recurso 15.png" alt="">
 		</div>
 		<div id="touchbars" class="touchbars">
 			<div id="btnLeft">
@@ -108,7 +108,7 @@
 				<img onclick="openInstructions()" id="instructions-open" class="instructions-open" src="./icons/instructions.svg" alt="">
 				<img onclick="closeInstructions()" id="instructions-close" class="instructions-close d-none" src="./icons/close.svg" alt="">
 			</div>
-			<div class="audio">
+			<div class="restart">
 				<img onclick="toggleGame()" id="play-game" class="d-none" src="./icons/play.svg" alt="">
 				<img onclick="toggleGame()" id="pause-game" src="./icons/pause.svg" alt="">
 			</div>

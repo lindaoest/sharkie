@@ -32,12 +32,14 @@ class Pufferfish extends MoveableObject {
 		this.speed = 0.15 + Math.random() * 0.25;
 
 		setInterval(() => {
-			if(this.pufferfishDead) {
-				this.playAnimation(this.IMAGES_DEAD);
-				this.position_x -= 40;
-				this.position_y -= 40;
-			} else {
-				this.playAnimation(this.IMAGES_SWIMMING);
+			if(!pauseGame) {
+				if(this.pufferfishDead) {
+					this.playAnimation(this.IMAGES_DEAD);
+					this.position_x -= 40;
+					this.position_y -= 40;
+				} else {
+					this.playAnimation(this.IMAGES_SWIMMING);
+				}
 			}
 		}, 200);
 	}

@@ -3,6 +3,7 @@ let world;
 let keyboard = new Keyboard();
 let time_standing;
 let sounds;
+let pauseGame = false;
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -141,6 +142,8 @@ window.addEventListener('keyup', (event) => {
 
 function startGame() {
 	document.querySelector('.startScreen').style.display = 'none';
+	document.querySelector('.youwinScreen').style.display = 'none';
+	document.querySelector('.gameoverScreen').style.display = 'none';
 	if(window.innerWidth < 800) {
 		document.getElementById('touchbars').style.display = 'flex';
 	}
@@ -213,12 +216,18 @@ function playAudio() {
 }
 
 function toggleGame() {
-	let pauseGame = document.getElementById('pause-game');
-	let playGame = document.getElementById('play-game');
+	let pauseGameButton = document.getElementById('pause-game');
+	let playGameButton = document.getElementById('play-game');
 
-	pauseGame.classList.toggle('d-none');
-	playGame.classList.toggle('d-none');
-	world.togglePause();
+	pauseGameButton.classList.toggle('d-none');
+	playGameButton.classList.toggle('d-none');
+
+	pauseGame = !pauseGame;
+	if(pauseGame) {
+		world.muteAudio();
+	} else {
+		world.playAudio();
+	}
 }
 
 function openControls() {
@@ -249,4 +258,9 @@ function openSources() {
 	controls.style.display = 'none';
 	tips.style.display = 'none';
 	sources.style.display = 'flex';
+}
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+	startGame();
 }

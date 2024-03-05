@@ -24,7 +24,6 @@ class World {
 	camera_x = 0;
 	time_standing;
 	sound_is_muted = false;
-	paused = false;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -98,7 +97,7 @@ class World {
 	}
 
 	addToMap(mo) {
-		if(mo.otherDirection) {
+		if(mo.otherDirection || mo.bubbleOtherDirection) {
 			this.flipImage(mo);
 		}
 
@@ -112,7 +111,7 @@ class World {
 			this.ctx.stroke();
 		}
 
-		if(mo.otherDirection) {
+		if(mo.otherDirection || mo.bubbleOtherDirection) {
 			this.flipImageBack(mo);
 		}
 	}
@@ -294,56 +293,4 @@ class World {
 			}
 		}, 200);
 	}
-
-	// togglePause() {
-	// 	if(!this.paused) {
-	// 		this.pauseGame();
-	// 	} else if(this.paused) {
-	// 		this.resumeGame();
-	// 	}
-	// }
-
-	// pauseGame() {
-    //     // Hintergrundsound anhalten
-    //     if (!this.endboss.firstContact) {
-    //         sounds.background_audio.pause();
-    //     } else {
-    //         sounds.action_audio.pause();
-    //     }
-
-    //     // Alle Intervalle stoppen
-    //     clearInterval(this.checkAttacksInterval);
-    //     clearInterval(this.checkAttackOnJellyfishInterval);
-    //     clearInterval(this.checkCollisionsInterval);
-    //     clearInterval(this.getCoinsInterval);
-    //     clearInterval(this.getPoisonInterval);
-    //     clearInterval(this.animateEndbossInterval);
-    //     clearInterval(this.checkAttackOnEndbossInterval);
-
-    //     // Animationen pausieren
-    //     this.paused = true;
-    // }
-
-    // resumeGame() {
-    //     // Hintergrundsound fortsetzen
-    //     if (!this.endboss.firstContact) {
-    //         sounds.background_audio.play();
-    //     } else {
-    //         sounds.action_audio.play();
-    //     }
-
-    //     // Intervalle wieder starten
-    //     this.checkAttacksInterval = setInterval(() => {
-    //         // Ihre Funktion für checkAttacks
-    //     }, 1000);
-
-    //     this.checkAttackOnJellyfishInterval = setInterval(() => {
-    //         // Ihre Funktion für checkAttackOnJellyfish
-    //     }, 1000);
-
-    //     // Weitere Intervalle hier starten...
-
-    //     // Animationen fortsetzen
-    //     this.paused = false;
-    // }
 }

@@ -14,6 +14,7 @@ class MoveableObject extends DrawableObject {
 	positionCharacterY;
 	hurtPufferfish = false;
 	bubbleOtherDirection = false;
+	intervalIds = [];
 
 	offset = {
 		top: 0,
@@ -24,8 +25,10 @@ class MoveableObject extends DrawableObject {
 
 	moveLeft() {
 		setInterval(() => {
-			//this.position_x -= 0.15 + Math.random() * 0.25;
-			this.position_x -= this.speed;
+			if(!pauseGame) {
+				//this.position_x -= 0.15 + Math.random() * 0.25;
+				this.position_x -= this.speed;
+			}
 		}, 1000 / 60);
 	}
 
@@ -90,4 +93,14 @@ class MoveableObject extends DrawableObject {
 	endbossIsHitted() {
 		this.endbossHitted = true;
 	}
+
+	/**
+   * adds an interval to the functions and stores the id of the intervals in an array
+   * @param {function} fn - function which is to be executed in intervals
+   * @param {number} time - interval time
+   */
+	setStoppableInterval(fn, time) {
+		let id = setInterval(fn, time);
+		this.intervalIds.push(id);
+	  }
 }

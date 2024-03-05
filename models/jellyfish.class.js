@@ -33,22 +33,24 @@ class Jellyfish extends MoveableObject {
 		this.speed = 0.15;
 
 		setInterval(() => {
-			if(this.position_y < 240 && !this.changeDirection) {
-				this.position_y += 5;
-			} else if(this.position_y >= 240 || this.changeDirection) {
-				if(this.position_y <= 180) {
-					this.changeDirection = false;
-				} else {
-					this.changeDirection = true;
+			if(!pauseGame) {
+				if(this.position_y < 240 && !this.changeDirection) {
+					this.position_y += 5;
+				} else if(this.position_y >= 240 || this.changeDirection) {
+					if(this.position_y <= 180) {
+						this.changeDirection = false;
+					} else {
+						this.changeDirection = true;
+					}
+					this.position_y -= 5;
 				}
-				this.position_y -= 5;
-			}
-			if(this.jellyfishDead) {
-				this.playAnimation(this.IMAGES_DEAD_YELLOW);
-				this.position_x += 20;
-				this.position_y += -20;
-			} else {
-				this.playAnimation(this.IMAGES_SWIMMING)
+				if(this.jellyfishDead) {
+					this.playAnimation(this.IMAGES_DEAD_YELLOW);
+					this.position_x += 20;
+					this.position_y += -20;
+				} else {
+					this.playAnimation(this.IMAGES_SWIMMING)
+				}
 			}
 		}, 200);
 	}

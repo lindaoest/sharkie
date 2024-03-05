@@ -32,12 +32,14 @@ class Jellyfish_Dangerous extends MoveableObject {
 		this.speed = 0.15;
 
 		setInterval(() => {
-			if(this.jellyfishDead) {
-				this.playAnimation(this.IMAGES_DEAD_DANGEROUS);
-				this.position_x += 20;
-				this.position_y += -20;
-			} else {
-				this.playAnimation(this.IMAGES_SWIMMING)
+			if(!pauseGame) {
+				if(this.jellyfishDead) {
+					this.playAnimation(this.IMAGES_DEAD_DANGEROUS);
+					this.position_x += 20;
+					this.position_y += -20;
+				} else {
+					this.playAnimation(this.IMAGES_SWIMMING)
+				}
 			}
 		}, 200);
 	}

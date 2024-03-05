@@ -74,21 +74,23 @@ class Endboss extends MoveableObject {
 	animate() {
 		sounds.whale_audio.pause();
 		setInterval(() => {
-			if(!this.firstContact) {
-				this.playAnimation(this.IMAGES_SWIMMING);
-			} else if(this.endbossHitted) {
-				this.playHurtAnimation();
-			} else if(this.energy == 0) {
-				this.playAnimation(this.IMAGES_DEAD);
-				this.endbossHitted = false;
-			} else {
-                this.playAnimation(this.IMAGES_FLOATING);
-				setTimeout(() => {
-					if(!this.world.sound_is_muted) {
-						sounds.whale_audio.play();
-					}
-				}, 5000);
-				this.checkDifferenz();
+			if(!pauseGame) {
+				if(!this.firstContact) {
+					this.playAnimation(this.IMAGES_SWIMMING);
+				} else if(this.endbossHitted) {
+					this.playHurtAnimation();
+				} else if(this.energy == 0) {
+					this.playAnimation(this.IMAGES_DEAD);
+					this.endbossHitted = false;
+				} else {
+					this.playAnimation(this.IMAGES_FLOATING);
+					setTimeout(() => {
+						if(!this.world.sound_is_muted) {
+							sounds.whale_audio.play();
+						}
+					}, 5000);
+					this.checkDifferenz();
+				}
 			}
 		}, 200);
 	}
