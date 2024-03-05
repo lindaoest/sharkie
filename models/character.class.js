@@ -133,11 +133,15 @@ class Character extends MoveableObject {
 			if(this.canMoveRight()) {
 				this.position_x += 10;
 				this.otherDirection = false;
+				this.bubbleOtherDirection = false;
+				this.world.flipBubble = 40;
 				this.playSound();
 			}
 			if(this.canMoveLeft()) {
 				this.position_x -= 10;
 				this.otherDirection = true;
+				this.bubbleOtherDirection = true;
+				this.world.flipBubble = 180;
 				this.playSound();
 			}
 			if(this.canMoveUp()) {

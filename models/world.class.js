@@ -24,6 +24,7 @@ class World {
 	camera_x = 0;
 	time_standing;
 	sound_is_muted = false;
+	flipBubble = 40;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -41,7 +42,6 @@ class World {
 		this.checkAttackOnEndboss();
 		this.addBackgroundSound();
 		this.checkEnergy();
-		this.checkOtherDirectionBubble();
 	}
 
 	setWorld() {
@@ -117,16 +117,24 @@ class World {
 
 	flipImageBack(mo) {
 		mo.position_x = mo.position_x * -1;
-		this.ctx.restore(); //Das Spiegeln wieder rückläufig machen, damit die anderen Bilder nicht auch gespiegelt werden
+		this.ctx.restore(); //Das Spiegeln wieder rückgängig machen, damit die anderen Bilder nicht auch gespiegelt werden
 	}
 
 	checkAttacks() {
 		setInterval(() => {
 			if(this.keyboard.key_attack) {
-				if(this.character.poison == 0) {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false));
+				if(this.character.bubbleOtherDirection) {
+					if(this.character.poison == 0) {
+						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
+					} else {
+						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'otherDirection'));
+					}
 				} else {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - 40, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true));
+					if(this.character.poison == 0) {
+						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'normalDirection'));
+					} else {
+						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'normalDirection'));
+					}
 				}
 			}
 		}, 1000);
@@ -208,16 +216,6 @@ class World {
 					this.statusbar_poison.setPercentagePoison(this.character.poison);
 					i--;
 				}
-			}
-		}, 200);
-	}
-
-	checkOtherDirectionBubble() {
-		setInterval(() => {
-			if(this.character.otherDirection) {
-				this.bubble_poisons.forEach((bubble_poison) => {
-					bubble_poison.bubbleOtherDirection = true;
-				})
 			}
 		}, 200);
 	}
