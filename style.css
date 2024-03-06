@@ -73,6 +73,7 @@ canvas {
 .gameoverScreen img:last-child {
 	width: 30%;
 	padding-top: 32px;
+	cursor: pointer;
 }
 .youwinScreen {
 	background-image: url('img/3. Background/Dark/2.png');
@@ -86,11 +87,23 @@ canvas {
 }
 .youwinScreen img:last-child {
 	position: absolute;
-    bottom: 14%;
+    bottom: 20%;
     left: 0;
 	right: 0;
-    width: 40%;
+    width: 30%;
     margin: 0 auto;
+	cursor: pointer;
+}
+#turnDevice {
+	position: absolute;
+    background-color: #000000;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .startButton {
 	position: absolute;
@@ -98,6 +111,7 @@ canvas {
 	bottom: 40px;
 	width: 180px;
 	z-index: 4;
+	cursor: pointer;
 }
 .overlay {
 	position: absolute;
@@ -128,6 +142,7 @@ canvas {
 	justify-content: center;
     gap: 40px;
 	margin: 48px 0;
+	cursor: pointer;
 }
 .instructions .controls {
 	display: flex;
@@ -158,9 +173,13 @@ canvas {
 }
 .menu > * {
 	padding-right: 16px;
+	cursor: pointer;
 }
 .menu #mute-audio {
 	display: none;
+}
+.menu img:hover {
+	box-shadow: 2px 0px 7px white;
 }
 .touchbars {
 	position: absolute;
@@ -191,6 +210,12 @@ canvas {
 .touchbars #btnSpace {
 	margin-left: 10px;
     margin-top: 70px;
+}
+
+@media screen and (max-width: 610px) and (orientation: portrait) {
+	#turnDevice {
+		display: flex;
+	}
 }
 
 @media screen and (max-width: 720px) {

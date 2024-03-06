@@ -1,17 +1,5 @@
 class World {
 	character = new Character();
-	poisons = [
-		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100, true),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 1380, 100, true),
-		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1710, 320),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2000, 20, true),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 700, 60, true),
-		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 900, 300),
-		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1380, 320),
-		new Poison('img/4. Marcadores/Posión/Animada/1.png', 2300, 80, true),
-		new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
-	];
 	endboss = new Endboss();
 	bubble_poisons = [];
 	statusbar_coins = new StatusbarCoins(20, 10, 0);
@@ -48,13 +36,14 @@ class World {
 		this.character.world = this;
 		this.endboss.world = this;
 		this.bubble_poisons.world = this;
+		setInterval(() => this.enemysSwimAfterCharacter(), 300);
+	}
 
-		setInterval(() => {
-			this.endboss.positionCharacterX = this.character.position_x;
-			this.endboss.positionCharacterY = this.character.position_y - this.character.height;
-			this.level.enemies[25].positionCharacterX = this.character.position_x + 50;
-			this.level.enemies[25].positionCharacterY = this.character.position_y + 80;
-		}, 300);
+	enemysSwimAfterCharacter() {
+		this.endboss.positionCharacterX = this.character.position_x;
+		this.endboss.positionCharacterY = this.character.position_y - this.character.height;
+		this.level.enemies[25].positionCharacterX = this.character.position_x + 50;
+		this.level.enemies[25].positionCharacterY = this.character.position_y + 80;
 	}
 
 	draw() {
@@ -63,12 +52,9 @@ class World {
 		this.ctx.translate(this.camera_x, 0);
 
 		//Gehe Schichtenweise, das heißt zuerst kommt das hinterste Element und so geht es weiter bis man das vorderste einfügt
-		// this.addToMap(this.water);
 		this.addObjectsToMap(this.level.backgroundObjects);
-
-		// this.addToMap(this.light);
 		this.addObjectsToMap(this.level.coins);
-		this.addObjectsToMap(this.poisons);
+		this.addObjectsToMap(this.level.poisons);
 		this.addToMap(this.character);
 		this.addToMap(this.endboss);
 		this.addObjectsToMap(this.level.enemies);
@@ -121,23 +107,25 @@ class World {
 	}
 
 	checkAttacks() {
-		setInterval(() => {
-			if(this.keyboard.key_attack) {
-				if(this.character.bubbleOtherDirection) {
-					if(this.character.poison == 0) {
-						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
-					} else {
-						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'otherDirection'));
-					}
+		setInterval(() => this.createBubble(), 1000);
+	}
+
+	createBubble() {
+		if(this.keyboard.key_attack) {
+			if(this.character.bubbleOtherDirection) {
+				if(this.character.poison == 0) {
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
 				} else {
-					if(this.character.poison == 0) {
-						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'normalDirection'));
-					} else {
-						this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'normalDirection'));
-					}
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'otherDirection'));
+				}
+			} else {
+				if(this.character.poison == 0) {
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'normalDirection'));
+				} else {
+					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'normalDirection'));
 				}
 			}
-		}, 1000);
+		}
 	}
 
 	checkAttackOnJellyfish() {
@@ -160,59 +148,59 @@ class World {
 					this.character.hit(5, enemy.enemy_spezies);
 					this.statusbar_energy.setPercentageHeart(this.character.energy);
 				}
-				if(this.character.isColliding(enemy) && enemy['enemy_spezies'] == 'pufferfish') {
-					if(enemy.hurtPufferfish) {
-						enemy.pufferfishIsHitted();
-					}
-				}
+				this.checkCollisionPufferfish(enemy);
 			})
-			if(this.character.isColliding(this.endboss)) {
-				this.character.hit(5);
-				this.statusbar_energy.setPercentageHeart(this.character.energy);
-			}
+			this.checkCollisionEndboss();
 		}, 1000);
+	}
+
+	checkCollisionPufferfish(enemy) {
+		if(this.character.isColliding(enemy) && enemy['enemy_spezies'] == 'pufferfish') {
+			if(enemy.hurtPufferfish) {
+				enemy.pufferfishIsHitted();
+			}
+		}
+	}
+
+	checkCollisionEndboss() {
+		if(this.character.isColliding(this.endboss)) {
+			this.character.hit(5);
+			this.statusbar_energy.setPercentageHeart(this.character.energy);
+		}
 	}
 
 	getCoins() {
 		setInterval(() => {
 			sounds.coin_audio.pause();
-			sounds.coin_audio.currentTime = 0;
-			// Iteriere über alle Münzen im Level
 			for (let i = 0; i < this.level.coins.length; i++) {
 				let coin = this.level.coins[i];
-				// Überprüfe, ob der Charakter mit dieser Münze kollidiert
 				if (this.character.isColliding(coin)) {
-					// Entferne die Münze aus dem Level
 					this.level.coins.splice(i, 1);
-					// Aktualisiere den Münzzähler des Charakters
 					this.character.getCoin();
-					// Sound
-					if(!this.sound_is_muted) {
-						sounds.coin_audio.play();
-					}
-					// Aktualisiere die Statusleiste für Münzen
+					this.playCoinsSound();
 					this.statusbar_coins.setPercentageCoins(this.character.coins);
-					// Verringere den Index, da das Array sich jetzt verschoben hat
-					i--;
+					i--; // Verringere den Index, da das Array sich jetzt verschoben hat
 				}
 			}
 		}, 200);
 	}
 
+	playCoinsSound() {
+		sounds.coin_audio.currentTime = 0;
+		if(!this.sound_is_muted) {
+			sounds.coin_audio.play();
+		}
+	}
+
 	getPoison() {
 		setInterval(() => {
 			sounds.poison_audio.pause();
-			for (let i = 0; i < this.poisons.length; i++) {
-				let poison = this.poisons[i];
+			for (let i = 0; i < this.level.poisons.length; i++) {
+				let poison = this.level.poisons[i];
 				if (this.character.isColliding(poison)) {
-					this.poisons.splice(i, 1);
+					this.level.poisons.splice(i, 1);
 					this.character.getPoison();
-					sounds.poison_audio.currentTime = 0;
-					setTimeout(() => {
-						if(!this.sound_is_muted) {
-							sounds.poison_audio.play();
-						}
-					}, 100); // Starten Sie den Sound mit einer Verzögerung von 100 Millisekunden
+					this.playPoisonSound();
 					this.statusbar_poison.setPercentagePoison(this.character.poison);
 					i--;
 				}
@@ -220,17 +208,28 @@ class World {
 		}, 200);
 	}
 
+	playPoisonSound() {
+		sounds.poison_audio.currentTime = 0;
+		if(!this.sound_is_muted) {
+			sounds.poison_audio.play();
+		}
+	}
+
 	animateEndboss() {
 		setInterval(() => {
 			if(this.character.position_x > 2090) {
 				if(this.endboss.firstContact && !this.sound_is_muted) {
-					sounds.background_audio.pause();
-					sounds.action_audio.play();
-					sounds.action_audio.loop = true;
+					this.playEndbossSound();
 				}
 				this.endboss.firstContactEndboss();
 			}
 		}, 200);
+	}
+
+	playEndbossSound() {
+		sounds.background_audio.pause();
+		sounds.action_audio.play();
+		sounds.action_audio.loop = true;
 	}
 
 	checkAttackOnEndboss() {
@@ -239,6 +238,7 @@ class World {
 				if(bubble_poison.isColliding(this.endboss)) {
 					this.endboss.hit(20);
 					this.endboss.endbossIsHitted();
+					this.bubble_poisons.splice(bubble_poison, 1);
 				}
 			})
 		}, 1000);
@@ -273,14 +273,24 @@ class World {
 	checkEnergy() {
 		setInterval(() => {
 			if(this.character.energy <= 0) {
-				setTimeout(() => {
-					document.getElementById('gameover').style.display = 'flex';
-				}, 2000);
+				this.youLost();
 			} else if(this.endboss.energy <= 0) {
-				setTimeout(() => {
-					document.getElementById('youwin').style.display = 'flex';
-				}, 2000)
+				this.youWin();
 			}
 		}, 200);
+	}
+
+	youLost() {
+		setTimeout(() => {
+			document.getElementById('gameover').style.display = 'flex';
+			this.muteAudios();
+		}, 2000);
+	}
+
+	youWin() {
+		setTimeout(() => {
+			document.getElementById('youwin').style.display = 'flex';
+			this.muteAudios();
+		}, 2000)
 	}
 }

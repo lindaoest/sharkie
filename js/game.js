@@ -224,9 +224,9 @@ function toggleGame() {
 
 	pauseGame = !pauseGame;
 	if(pauseGame) {
-		world.muteAudio();
+		world.muteAudios();
 	} else {
-		world.playAudio();
+		world.playAudios();
 	}
 }
 

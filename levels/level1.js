@@ -108,6 +108,18 @@ function initLevel() {
 			new Coins(1900 + 150, 50 + 70),
 			new Coins(1900 + 210, 50 + 50),
 			new Coins(1900 + 250, 50),
+		],
+		[
+			new Poison('img/4. Marcadores/Posión/Dark - Right.png', 610, 320),
+			new Poison('img/4. Marcadores/Posión/Animada/1.png', 1080, 100, true),
+			new Poison('img/4. Marcadores/Posión/Animada/1.png', 1380, 100, true),
+			new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1710, 320),
+			new Poison('img/4. Marcadores/Posión/Animada/1.png', 2000, 20, true),
+			new Poison('img/4. Marcadores/Posión/Animada/1.png', 700, 60, true),
+			new Poison('img/4. Marcadores/Posión/Dark - Right.png', 900, 300),
+			new Poison('img/4. Marcadores/Posión/Dark - Right.png', 1380, 320),
+			new Poison('img/4. Marcadores/Posión/Animada/1.png', 2300, 80, true),
+			new Poison('img/4. Marcadores/Posión/Dark - Right.png', 210, 350),
 		]
 	)
 }
