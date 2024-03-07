@@ -13,6 +13,7 @@ class World {
 	time_standing;
 	sound_is_muted = false;
 	flipBubble = 40;
+	lastTimeAttack;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -107,11 +108,12 @@ class World {
 	}
 
 	checkAttacks() {
-		setInterval(() => this.createBubble(), 1000);
+		setInterval(() => this.createBubble(), 200);
 	}
 
 	createBubble() {
 		if(this.keyboard.key_attack) {
+			console.log('create bubble');
 			if(this.character.bubbleOtherDirection) {
 				if(this.character.poison == 0) {
 					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));

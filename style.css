@@ -186,35 +186,58 @@ canvas {
     bottom: 0;
     left: 0;
 	display: none;
+	width: 80%;
 }
 .touchbars > * {
-	width: 60px;
-	height: 60px;
+	width: 40px;
+	height: 40px;
 }
 .touchbars #btnLeft {
-	margin-top: 70px;
+	margin-top: 50px;
 }
 .touchbars #btnUp {
-	margin-bottom: 70px;
+	margin-bottom: 50px;
 	margin-left: 10px;
 }
 .touchbars #btnDown {
-	margin-top: 70px;
-    margin-left: -60px;
+	margin-top: 50px;
+    margin-left: -40px;
 }
 .touchbars #btnRight {
-	margin-top: 70px;
+	margin-top: 50px;
 	margin-left: 10px;
+}
+.touchbars .right-keys {
+	margin-left: auto;
+    margin-right: 0;
 }
 .touchbars #btnD,
 .touchbars #btnSpace {
 	margin-left: 10px;
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 @media screen and (max-width: 610px) and (orientation: portrait) {
 	#turnDevice {
 		display: flex;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.menu {
+		flex-direction: row;
+    	width: auto;
+		height: auto;
+    	top: 16px;
+	}
+	.menu > * {
+		padding: 0 8px 0 0;
+		width: 32px;
+		height: 32px;
+	}
+	.menu img {
+		width: 32px;
+		height: 32px;
 	}
 }
 

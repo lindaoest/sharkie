@@ -4,6 +4,15 @@ let keyboard = new Keyboard();
 let time_standing;
 let sounds;
 let pauseGame = false;
+let muteAudioStorage;
+
+getLocalStorage();
+
+function getLocalStorage() {
+	if(localStorage.getItem('muteAudio')) {
+		muteAudioStorage = JSON.parse(localStorage.getItem('muteAudio'));
+	}
+}
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -108,6 +117,7 @@ window.addEventListener('keydown', (event) => {
 	}
 	if(event.keyCode == 68) {
 		keyboard.key_attack = true;
+		world.lastTimeAttack = new Date();
 	}
 	if(event.keyCode = 27) {
 		closeFullscreen();
@@ -148,6 +158,13 @@ function startGame() {
 		document.getElementById('touchbars').style.display = 'flex';
 	}
 	init();
+
+	getLocalStorage();
+	if(muteAudioStorage) {
+		muteAudio();
+	} else {
+		playAudio();
+	}
 }
 
 function openFullscreen() {
@@ -174,12 +191,14 @@ function closeFullscreen() {
 }
 
 function exitFullscreen() {
-	if(document.exitFullscreen) {
-	  document.exitFullscreen();
-	} else if(document.webkitExitFullscreen) {
-	  document.webkitExitFullscreen();
+	if (document.fullscreenElement || document.webkitFullscreenElement) {
+	  if (document.exitFullscreen) {
+		document.exitFullscreen();
+	  } else if (document.webkitExitFullscreen) {
+		document.webkitExitFullscreen();
+	  }
 	}
-  }
+}
 
 function openInstructions() {
 	let instructions = document.getElementById('instructions');
@@ -205,6 +224,8 @@ function muteAudio() {
 	let playAudio = document.getElementById('play-audio');
 	muteAudio.style.display = 'flex';
 	playAudio.style.display = 'none';
+
+	localStorage.setItem('muteAudio', JSON.stringify(true));
 }
 
 function playAudio() {
@@ -213,6 +234,8 @@ function playAudio() {
 	let playAudio = document.getElementById('play-audio');
 	muteAudio.style.display = 'none';
 	playAudio.style.display = 'flex';
+
+	localStorage.setItem('muteAudio', JSON.stringify(false));
 }
 
 function toggleGame() {

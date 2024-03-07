@@ -233,6 +233,7 @@ class Character extends MoveableObject {
 	playSound() {
 		if(!this.world.sound_is_muted) {
 			sounds.sharkie_swimming.play();
+			//setTimeout(function() {sounds.sharkie_swimming.play()}, 0);
 		}
 	}
 
