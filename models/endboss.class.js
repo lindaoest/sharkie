@@ -72,7 +72,7 @@ class Endboss extends MoveableObject {
 	}
 
 	animate() {
-		sounds.whale_audio.pause();
+		sounds.whale_audio.muted = true;
 		setInterval(() => this.playEndboss(), 200);
 	}
 
@@ -89,6 +89,7 @@ class Endboss extends MoveableObject {
 				this.playAnimation(this.IMAGES_FLOATING);
 				setTimeout(() => {
 					if(!this.world.sound_is_muted) {
+						sounds.whale_audio.muted = false;
 						sounds.whale_audio.play();
 					}
 				}, 5000);

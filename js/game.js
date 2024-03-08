@@ -117,7 +117,6 @@ window.addEventListener('keydown', (event) => {
 	}
 	if(event.keyCode == 68) {
 		keyboard.key_attack = true;
-		world.lastTimeAttack = new Date();
 	}
 	if(event.keyCode = 27) {
 		closeFullscreen();

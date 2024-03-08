@@ -97,6 +97,7 @@ class Character extends MoveableObject {
 		'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
 	];
 	world;
+	startBubbleAttack = false;
 
 	constructor() {
 		super().loadImage('img/1.Sharkie/1.IDLE/1.png');
@@ -129,7 +130,7 @@ class Character extends MoveableObject {
 
 	moveCharacter() {
 		if(!pauseGame) {
-			sounds.sharkie_swimming.pause();
+			sounds.sharkie_swimming.muted = true;
 			if(this.canMoveRight()) {
 				this.position_x += 10;
 				this.otherDirection = false;
@@ -173,9 +174,10 @@ class Character extends MoveableObject {
 	}
 
 	playCharacter() {
+		this.startBubbleAttack = false;
 		if(!pauseGame) {
 			if(!this.world.sound_is_muted) {
-				sounds.electricity_audio.pause();
+				sounds.electricity_audio.muted = true;
 			}
 			if(this.isDead()) {
 				this.playAnimation(this.IMAGES_DEAD); //Dead Animation
@@ -183,6 +185,7 @@ class Character extends MoveableObject {
 				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH); //Hurt from Pufferfish Animation
 			} else if(this.isSharkieHurtJellyfish()) {
 				if(!this.world.sound_is_muted) {
+					sounds.electricity_audio.muted = false;
 					sounds.electricity_audio.play();
 				}
 				this.playAnimation(this.IMAGES_HITTINGJELLYFISH); //Hurt from Jellyfish Animation
@@ -191,8 +194,16 @@ class Character extends MoveableObject {
 			} else if(this.isSharkieAttackingJellyfish()) {
 				if(this.poison == 0) {
 					this.playAnimation(this.IMAGES_BUBBLE);
+					let i = this.currentImage % this.IMAGES_BUBBLE.length; // Welches Bild wird gerade abgespielt?
+					if(i == 6) {
+						this.startBubbleAttack = true;
+					}
 				} else {
 					this.playAnimation(this.IMAGES_BUBBLE_POISON); //Attack Jellyfish Animation
+					let i = this.currentImage % this.IMAGES_BUBBLE_POISON.length; // Welches Bild wird gerade abgespielt?
+					if(i == 6) {
+						this.startBubbleAttack = true;
+					}
 				}
 			} else if(this.isSharkieAttackingPufferfish()) {
 				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH); //Attack Pufferfish Animation
@@ -207,7 +218,7 @@ class Character extends MoveableObject {
 	}
 
 	isSharkieHurtPufferfish() {
-		return this.isHurt() && this.hitPufferfish();
+		return this.isHurt() && this.hitPufferfish() && !this.world.keyboard.key_space;
 	}
 
 	isSharkieHurtJellyfish() {
@@ -232,8 +243,8 @@ class Character extends MoveableObject {
 
 	playSound() {
 		if(!this.world.sound_is_muted) {
+			sounds.sharkie_swimming.muted = false;
 			sounds.sharkie_swimming.play();
-			//setTimeout(function() {sounds.sharkie_swimming.play()}, 0);
 		}
 	}
 

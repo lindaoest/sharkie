@@ -13,7 +13,6 @@ class World {
 	time_standing;
 	sound_is_muted = false;
 	flipBubble = 40;
-	lastTimeAttack;
 
 	constructor(canvas, keyboard, time_standing) {
 		this.ctx = canvas.getContext('2d');
@@ -112,8 +111,7 @@ class World {
 	}
 
 	createBubble() {
-		if(this.keyboard.key_attack) {
-			console.log('create bubble');
+		if(this.keyboard.key_attack && this.character.startBubbleAttack) {
 			if(this.character.bubbleOtherDirection) {
 				if(this.character.poison == 0) {
 					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
@@ -173,7 +171,7 @@ class World {
 
 	getCoins() {
 		setInterval(() => {
-			sounds.coin_audio.pause();
+			sounds.coin_audio.muted = true;
 			for (let i = 0; i < this.level.coins.length; i++) {
 				let coin = this.level.coins[i];
 				if (this.character.isColliding(coin)) {
@@ -190,13 +188,14 @@ class World {
 	playCoinsSound() {
 		sounds.coin_audio.currentTime = 0;
 		if(!this.sound_is_muted) {
+			sounds.coin_audio.muted = false;
 			sounds.coin_audio.play();
 		}
 	}
 
 	getPoison() {
 		setInterval(() => {
-			sounds.poison_audio.pause();
+			sounds.poison_audio.muted = true;
 			for (let i = 0; i < this.level.poisons.length; i++) {
 				let poison = this.level.poisons[i];
 				if (this.character.isColliding(poison)) {
@@ -213,6 +212,7 @@ class World {
 	playPoisonSound() {
 		sounds.poison_audio.currentTime = 0;
 		if(!this.sound_is_muted) {
+			sounds.poison_audio.muted = false;
 			sounds.poison_audio.play();
 		}
 	}
@@ -229,7 +229,8 @@ class World {
 	}
 
 	playEndbossSound() {
-		sounds.background_audio.pause();
+		sounds.background_audio.muted = true;
+		sounds.action_audio.muted = false;
 		sounds.action_audio.play();
 		sounds.action_audio.loop = true;
 	}
@@ -247,15 +248,18 @@ class World {
 	}
 
 	addBackgroundSound() {
+		sounds.background_audio.muted = false;
 		sounds.background_audio.play();
 		sounds.background_audio.loop = true;
 	}
 
 	playAudios() {
 		if(this.character.position_x > 2090 || this.endboss.firstContact) {
+			sounds.action_audio.muted = false;
 			sounds.action_audio.play();
 			sounds.action_audio.loop = true;
 		} else {
+			sounds.background_audio.muted = false;
 			sounds.background_audio.play();
 			sounds.background_audio.loop = true;
 		}
@@ -263,13 +267,12 @@ class World {
     }
 
 	muteAudios() {
-		sounds.background_audio.pause();
+		sounds.background_audio.muted = true;
 		sounds.background_audio.loop = false;
-		sounds.action_audio.pause();
+		sounds.action_audio.muted = true;
 		sounds.action_audio.loop = false;
 
 		this.sound_is_muted = true;
-		sounds.electricity_audio.pause();
     }
 
 	checkEnergy() {
