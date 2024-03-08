@@ -25,6 +25,10 @@ class Poison extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Animates the character by continuously playing the poison animation at a fixed interval.
+	 * @function animate
+	 */
 	animate() {
 		setInterval(() => {
 			if(!pauseGame) {

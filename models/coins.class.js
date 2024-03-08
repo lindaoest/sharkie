@@ -18,6 +18,10 @@ class Coins extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Function to animate the character by playing a spinning animation at regular intervals if the game is not paused.
+	 * @function animate
+	*/
 	animate() {
 		setInterval(() => {
 			if(!pauseGame) {

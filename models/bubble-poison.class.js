@@ -14,6 +14,10 @@ class BubblePoison extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Function to animate the object's position.
+	 * @function animate
+	*/
 	animate() {
 		setInterval(() => {
 			if(this.directionBubble.includes('otherDirection')) {

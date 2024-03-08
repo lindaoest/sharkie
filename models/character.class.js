@@ -123,11 +123,19 @@ class Character extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Function to animate the character by moving and playing it.
+	 * @function animate
+	*/
 	animate() {
 		setInterval(() => this.moveCharacter(), 1000 / 60);
 		setInterval(() => this.playCharacter(), 200);
 	}
 
+	/**
+	 * Function to move the character based on user input and update its position.
+	 * @function moveCharacter
+	*/
 	moveCharacter() {
 		if(!pauseGame) {
 			sounds.sharkie_swimming.muted = true;
@@ -157,22 +165,46 @@ class Character extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Check if the character can move right.
+	 * @function canMoveRight
+	 * @returns {boolean} True if the character can move right, false otherwise.
+	*/
 	canMoveRight() {
 		return this.world.keyboard.key_right && this.position_x < this.world.level.level_end_x;
 	}
 
+	/**
+	 * Check if the character can move left.
+	 * @function canMoveLeft
+	 * @returns {boolean} True if the character can move left, false otherwise.
+	*/
 	canMoveLeft() {
 		return this.world.keyboard.key_left && this.position_x > 0;
 	}
 
+	/**
+	 * Check if the character can move up.
+	 * @function canMoveUp
+	 * @returns {boolean} True if the character can move up, false otherwise.
+	*/
 	canMoveUp() {
 		return this.world.keyboard.key_up && this.position_y > -100;
 	}
 
+	/**
+	 * Check if the character can move down.
+	 * @function canMoveDown
+	 * @returns {boolean} True if the character can move down, false otherwise.
+	*/
 	canMoveDown() {
 		return this.world.keyboard.key_down && this.position_y < 330;
 	}
 
+	/**
+	 * Function to play the character's animation based on its current state.
+	 * @function playCharacter
+	*/
 	playCharacter() {
 		this.startBubbleAttack = false;
 		if(!pauseGame) {
@@ -217,30 +249,64 @@ class Character extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Check if the character is hurt by a pufferfish.
+	 * @function isSharkieHurtPufferfish
+	 * @returns {boolean} True if the character is hurt by a pufferfish and the space key is not pressed, false otherwise.
+	*/
 	isSharkieHurtPufferfish() {
 		return this.isHurt() && this.hitPufferfish() && !this.world.keyboard.key_space;
 	}
 
+	/**
+	 * Check if the character is hurt by a jellyfish.
+	 * @function isSharkieHurtJellyfish
+	 * @returns {boolean} True if the character is hurt by a jellyfish, false otherwise.
+	*/
 	isSharkieHurtJellyfish() {
 		return this.isHurt() && this.hitJellyfish();
 	}
 
+	/**
+	 * Check if the character is swimming (moving in any direction).
+	 * @function isSharkieSwimming
+	 * @returns {boolean} True if the character is swimming, false otherwise.
+	*/
 	isSharkieSwimming() {
 		return this.world.keyboard.key_right || this.world.keyboard.key_left || this.world.keyboard.key_up || this.world.keyboard.key_down;
 	}
 
+	/**
+	 * Check if the character is attacking a jellyfish.
+	 * @function isSharkieAttackingJellyfish
+	 * @returns {boolean} True if the character is attacking a jellyfish, false otherwise.
+	*/
 	isSharkieAttackingJellyfish() {
 		return this.world.keyboard.key_attack;
 	}
 
+	/**
+	 * Check if the character is attacking a pufferfish.
+	 * @function isSharkieAttackingPufferfish
+	 * @returns {boolean} True if the character is attacking a pufferfish, false otherwise.
+	*/
 	isSharkieAttackingPufferfish() {
 		return this.world.keyboard.key_space;
 	}
 
+	/**
+	 * Check if the character is tired (not moving right and in a tired state).
+	 * @function isSharkieTired
+	 * @returns {boolean} True if the character is tired, false otherwise.
+	*/
 	isSharkieTired() {
 		return !this.world.keyboard.key_right && this.timeTired();
 	}
 
+	/**
+	 * Function to play the character's swimming sound if sound is not muted.
+	 * @function playSound
+	*/
 	playSound() {
 		if(!this.world.sound_is_muted) {
 			sounds.sharkie_swimming.muted = false;
@@ -248,18 +314,31 @@ class Character extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Check if the character has been standing for more than 7 seconds, indicating tiredness.
+	 * @function timeTired
+	 * @returns {boolean} True if the character has been standing for more than 7 seconds, false otherwise.
+	*/
 	timeTired() {
 		let timepassedStanding = new Date().getTime() - time_standing;
 		timepassedStanding = timepassedStanding / 1000;
 		return timepassedStanding > 7;
 	}
 
+	/**
+	 * Function to increase the character's coins by 3 if the current number of coins is less than 100.
+	 * @function getCoin
+	*/
 	getCoin() {
 		if(this.coins < 100) {
 			this.coins += 3;
 		}
 	}
 
+	/**
+	 * Function to increase the character's poison level by 10 if the current poison level is less than 100.
+	 * @function getPoison
+	*/
 	getPoison() {
 		if(this.poison < 100) {
 			this.poison += 10;

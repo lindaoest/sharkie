@@ -31,6 +31,10 @@ class Jellyfish_Dangerous extends MoveableObject {
 		setInterval(() => this.playJellyfish(), 200);
 	}
 
+	/**
+	 * Function to handle the animation of the jellyfish based on its state and the game's pause status.
+	 * @function playJellyfish
+	*/
 	playJellyfish() {
 		if(!pauseGame) {
 			if(this.jellyfishDead) {
@@ -41,6 +45,10 @@ class Jellyfish_Dangerous extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Function to play the dead animation for the dangerous jellyfish and update its position.
+	 * @function jellyfishDeadAnimation
+	*/
 	jellyfishDeadAnimation() {
 		this.playAnimation(this.IMAGES_DEAD_DANGEROUS);
 		this.position_x += 20;

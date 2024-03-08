@@ -26,6 +26,11 @@ class Pufferfish extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Initiates animation for the character, including movement and pufferfish animation.
+	 * Character moves left and adjusts speed randomly. Pufferfish animation is played at a fixed interval.
+	 * @function animate
+	 */
 	animate() {
 		this.moveLeft();
 		this.speed = 0.15 + Math.random() * 0.25;
@@ -35,6 +40,12 @@ class Pufferfish extends MoveableObject {
 		}, 200);
 	}
 
+	/**
+	 * Plays the animation for the pufferfish.
+	 * If the pufferfish is dead, plays the dead animation; otherwise, plays the swimming animation.
+	 * Also updates the position of the pufferfish based on the character's movement.
+	 * @function playPufferfish
+	 */
 	playPufferfish() {
 		if(!pauseGame) {
 			if(this.pufferfishDead) {
@@ -45,6 +56,11 @@ class Pufferfish extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Executes the dead animation for the pufferfish.
+	 * Plays the dead animation and adjusts the position accordingly.
+	 * @function deadAnimation
+	 */
 	deadAnimation() {
 		this.playAnimation(this.IMAGES_DEAD);
 		this.position_x -= 40;

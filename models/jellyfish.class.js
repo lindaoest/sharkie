@@ -25,6 +25,10 @@ class Jellyfish extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Function to animate the game by moving left and playing the jellyfish animation at regular intervals.
+	 * @function animate
+	*/
 	animate() {
 		this.moveLeft();
 		this.speed = 0.15;
@@ -32,6 +36,10 @@ class Jellyfish extends MoveableObject {
 		setInterval(() => this.playJellyfish(), 200);
 	}
 
+	/**
+	 * Function to handle the movement and animation of the jellyfish if the game is not paused.
+	 * @function playJellyfish
+	*/
 	playJellyfish() {
 		if(!pauseGame) {
 			this.movementJellyfish();
@@ -39,6 +47,11 @@ class Jellyfish extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Handles the movement of the jellyfish.
+	 * Moves the jellyfish up or down depending on its current direction and position.
+	 * @function movementJellyfish
+	*/
 	movementJellyfish() {
 		if(this.isMovingDown()) {
 			this.position_y += 5;
@@ -52,6 +65,11 @@ class Jellyfish extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Manages the animation of the jellyfish.
+	 * Plays the appropriate animation based on whether the jellyfish is dead or alive.
+	 * @function jellyfishDeadAnimation
+	*/
 	jellyfishDeadAnimation() {
 		if(this.jellyfishDead) {
 			this.deadAnimation();
@@ -60,14 +78,29 @@ class Jellyfish extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Checks if the jellyfish is moving down.
+	 * @returns {boolean} True if the jellyfish is moving down, otherwise false.
+	 * @function isMovingDown
+	*/
 	isMovingDown() {
 		return this.position_y < 240 && !this.changeDirection;
 	}
 
+	/**
+	 * Checks if the jellyfish is moving up.
+	 * @returns {boolean} True if the jellyfish is moving up, otherwise false.
+	 * @function isMovingUp
+	*/
 	isMovingUp() {
 		return this.position_y >= 240 || this.changeDirection;
 	}
 
+	/**
+	 * Executes the dead animation for the jellyfish.
+	 * Plays the dead animation and adjusts the position accordingly.
+	 * @function deadAnimation
+	*/
 	deadAnimation() {
 		this.playAnimation(this.IMAGES_DEAD_YELLOW);
 		this.position_x += 20;

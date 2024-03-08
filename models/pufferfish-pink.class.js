@@ -30,10 +30,20 @@ class Pufferfish_Pink extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Animates the pufferfish by continuously playing its swimming animation at a fixed interval.
+	 * @function animate
+	 */
 	animate() {
 		setInterval(() => this.playPufferfish(), 200);
 	}
 
+	/**
+	 * Plays the animation for the pufferfish.
+	 * If the pufferfish is dead, plays the dead animation; otherwise, plays the swimming animation.
+	 * Also updates the position of the pufferfish based on the character's movement.
+	 * @function playPufferfish
+	 */
 	playPufferfish() {
 		if(!pauseGame) {
 			if(this.pufferfishDead) {
@@ -45,6 +55,11 @@ class Pufferfish_Pink extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Executes the dead animation for the pufferfish.
+	 * Plays the dead animation and adjusts the position accordingly.
+	 * @function deadAnimation
+	 */
 	deadAnimation() {
 		this.playAnimation(this.IMAGES_DEAD);
 		this.position_x -= 40;

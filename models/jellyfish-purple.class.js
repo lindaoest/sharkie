@@ -25,12 +25,20 @@ class Jellyfish_Purple extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Initiates animation for the game.
+	 * @function animate
+	 */
 	animate() {
 		this.moveLeft();
 		this.speed = 0.15;
 		setInterval(() => this.playJellyfish(), 200);
 	}
 
+	/**
+	 * Function to handle the movement and animation of the jellyfish if the game is not paused.
+	 * @function playJellyfish
+	*/
 	playJellyfish() {
 		if(!pauseGame) {
 			this.movementJellyfish();
@@ -38,6 +46,10 @@ class Jellyfish_Purple extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Function to handle the movement of the jellyfish based on its direction.
+	 * @function movementJellyfish
+	*/
 	movementJellyfish() {
 		if(this.isMovingDown()) {
 			this.position_y += 5;
@@ -51,6 +63,10 @@ class Jellyfish_Purple extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Function to handle the animation of the jellyfish when it is dead or alive.
+	 * @function jellyfishDeadAnimation
+	*/
 	jellyfishDeadAnimation() {
 		if(this.jellyfishDead) {
 			this.deadAnimation();
@@ -59,14 +75,28 @@ class Jellyfish_Purple extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Check if the jellyfish is moving down based on its position and direction.
+	 * @function isMovingDown
+	 * @returns {boolean} True if the jellyfish is moving down, false otherwise.
+	*/
 	isMovingDown() {
 		return this.position_y < 350 && !this.changeDirection;
 	}
 
+	/**
+	 * Check if the jellyfish is moving up based on its position and direction.
+	 * @function isMovingUp
+	 * @returns {boolean} True if the jellyfish is moving up, false otherwise.
+	*/
 	isMovingUp() {
 		return this.position_y >= 350 || this.changeDirection;
 	}
 
+	/**
+	 * Function to play the dead animation for the jellyfish and update its position.
+	 * @function deadAnimation
+	*/
 	deadAnimation() {
 		this.playAnimation(this.IMAGES_DEAD_PURPLE);
 		this.position_x += 20;

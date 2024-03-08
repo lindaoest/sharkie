@@ -8,12 +8,20 @@ let muteAudioStorage;
 
 getLocalStorage();
 
+/**
+ * Retrieves muteAudio status from localStorage.
+ * @function getLocalStorage
+ */
 function getLocalStorage() {
 	if(localStorage.getItem('muteAudio')) {
 		muteAudioStorage = JSON.parse(localStorage.getItem('muteAudio'));
 	}
 }
 
+/**
+ * Initializes the game.
+ * @function init
+ */
 function init() {
 	canvas = document.getElementById('canvas');
 	initLevel();
@@ -35,6 +43,10 @@ function init() {
 	mobileTouchEvents();
 }
 
+/**
+ * Sets up touch events for mobile devices.
+ * @function mobileTouchEvents
+ */
 function mobileTouchEvents() {
 	document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
 		e.preventDefault();
@@ -149,6 +161,10 @@ window.addEventListener('keyup', (event) => {
 	time_standing = new Date().getTime();
 })
 
+/**
+ * Initializes the game when started.
+ * @function startGame
+ */
 function startGame() {
 	document.querySelector('.startScreen').style.display = 'none';
 	document.querySelector('.youwinScreen').style.display = 'none';
@@ -166,6 +182,10 @@ function startGame() {
 	}
 }
 
+/**
+ * Opens fullscreen mode.
+ * @function openFullscreen
+ */
 function openFullscreen() {
 	let fullscreen_element = document.getElementById('fullscreen-modus');
 	document.getElementById('exit-fullscreen').classList.remove('d-none');
@@ -173,6 +193,11 @@ function openFullscreen() {
 	enterFullscreen(fullscreen_element);
 }
 
+/**
+ * Requests fullscreen mode for the given element.
+ * @function enterFullscreen
+ * @param {HTMLElement} element - The element to request fullscreen for.
+ */
 function enterFullscreen(element) {
 	if(element.requestFullscreen) {
 	  element.requestFullscreen();
@@ -183,12 +208,20 @@ function enterFullscreen(element) {
 	}
 }
 
+/**
+ * Exits fullscreen mode.
+ * @function closeFullscreen
+ */
 function closeFullscreen() {
 	document.getElementById('fullscreen').classList.remove('d-none');
 	document.getElementById('exit-fullscreen').classList.add('d-none');
 	exitFullscreen();
 }
 
+/**
+ * Exits fullscreen mode for the document.
+ * @function exitFullscreen
+ */
 function exitFullscreen() {
 	if (document.fullscreenElement || document.webkitFullscreenElement) {
 	  if (document.exitFullscreen) {
@@ -199,6 +232,10 @@ function exitFullscreen() {
 	}
 }
 
+/**
+ * Opens the instructions.
+ * @function openInstructions
+ */
 function openInstructions() {
 	let instructions = document.getElementById('instructions');
 	let closeInstructions = document.getElementById('instructions-close');
@@ -208,6 +245,10 @@ function openInstructions() {
 	closeInstructions.style.display = 'flex';
 }
 
+/**
+ * Closes the instructions.
+ * @function closeInstructions
+ */
 function closeInstructions() {
 	let instructions = document.getElementById('instructions');
 	let closeInstructions = document.getElementById('instructions-close');
@@ -217,6 +258,10 @@ function closeInstructions() {
 	closeInstructions.style.display = 'none';
 }
 
+/**
+ * Mutes all audio in the game.
+ * @function muteAudio
+ */
 function muteAudio() {
 	world.muteAudios();
 	let muteAudio = document.getElementById('mute-audio');
@@ -227,6 +272,11 @@ function muteAudio() {
 	localStorage.setItem('muteAudio', JSON.stringify(true));
 }
 
+
+/**
+ * Plays all audio in the game.
+ * @function playAudio
+ */
 function playAudio() {
 	world.playAudios();
 	let muteAudio = document.getElementById('mute-audio');
@@ -237,6 +287,10 @@ function playAudio() {
 	localStorage.setItem('muteAudio', JSON.stringify(false));
 }
 
+/**
+ * Toggles the game between pause and play.
+ * @function toggleGame
+ */
 function toggleGame() {
 	let pauseGameButton = document.getElementById('pause-game');
 	let playGameButton = document.getElementById('play-game');
@@ -252,6 +306,10 @@ function toggleGame() {
 	}
 }
 
+/**
+ * Opens the controls section.
+ * @function openControls
+ */
 function openControls() {
 	let controls = document.getElementById('controls');
 	let tips = document.getElementById('tips');
@@ -262,6 +320,10 @@ function openControls() {
 	sources.style.display = 'none';
 }
 
+/**
+ * Opens the tips section.
+ * @function openTips
+ */
 function openTips() {
 	let controls = document.getElementById('controls');
 	let tips = document.getElementById('tips');
@@ -272,6 +334,10 @@ function openTips() {
 	sources.style.display = 'none';
 }
 
+/**
+ * Opens the sources section.
+ * @function openSources
+ */
 function openSources() {
 	let controls = document.getElementById('controls');
 	let tips = document.getElementById('tips');
@@ -282,6 +348,10 @@ function openSources() {
 	sources.style.display = 'flex';
 }
 
+/**
+ * Clears all intervals and restarts the game.
+ * @function clearAllIntervals
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 	startGame();

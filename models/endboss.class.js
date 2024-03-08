@@ -71,11 +71,19 @@ class Endboss extends MoveableObject {
 		this.animate();
 	}
 
+	/**
+	 * Function to animate the end boss with a specified interval and muted whale audio.
+	 * @function animate
+	*/
 	animate() {
 		sounds.whale_audio.muted = true;
 		setInterval(() => this.playEndboss(), 200);
 	}
 
+	/**
+	 * Function to play different animations for the end boss based on game conditions, and trigger sound effects.
+	 * @function playEndboss
+	*/
 	playEndboss() {
 		if(!pauseGame) {
 			if(!this.firstContact) {
@@ -98,6 +106,10 @@ class Endboss extends MoveableObject {
 		}
 	}
 
+	/**
+	 * Function to play the hurt animation for the end boss and reset the hitted state after a delay.
+	 * @function playHurtAnimation
+	*/
 	playHurtAnimation() {
 		this.playAnimation(this.IMAGES_HURT);
 		setTimeout(() => {

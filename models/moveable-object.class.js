@@ -25,6 +25,10 @@ class MoveableObject extends DrawableObject {
 		left: 0
 	};
 
+	/**
+	 * Moves the character left continuously at a given speed.
+	 * @function moveLeft
+	*/
 	moveLeft() {
 		setInterval(() => {
 			if(!pauseGame) {
@@ -33,6 +37,12 @@ class MoveableObject extends DrawableObject {
 		}, 1000 / 60);
 	}
 
+	/**
+	 * Checks if the character is colliding with another object.
+	 * @param {object} obj - The object to check collision with.
+	 * @returns {boolean} True if collision occurs, otherwise false.
+	 * @function isColliding
+	*/
 	// this.character.isColliding(this.pufferfish)
 	//Berechnung ob sich die Rechtecke vom Character und den Enemies sich überkreuzen
 	isColliding (obj) {
@@ -44,6 +54,12 @@ class MoveableObject extends DrawableObject {
 
 	}
 
+	/**
+	 * Handles the character getting hit by an enemy.
+	 * @param {number} energy - The amount of energy to deduct from the character.
+	 * @param {string} spezies - The species of the enemy hitting the character.
+	 * @function hit
+	*/
 	hit(energy, spezies) {
 		this.energy -= energy;
 		if(this.energy < 0) {
@@ -54,6 +70,11 @@ class MoveableObject extends DrawableObject {
 		}
 	}
 
+	/**
+	 * Checks if the character is currently hurt.
+	 * @returns {boolean} True if the character is hurt, otherwise false.
+	 * @function isHurt
+	*/
 	isHurt() {
 		//Differenz in Sekunden
 		let timepassed = new Date().getTime() - this.lastHit;
@@ -61,35 +82,66 @@ class MoveableObject extends DrawableObject {
 		return timepassed < 1; //gibt true aus oder false
 	}
 
+	/**
+	 * Checks if the character has hit a pufferfish.
+	 * @returns {boolean} True if the character has hit a pufferfish, otherwise false.
+	 * @function hitPufferfish
+	 */
 	hitPufferfish() {
 		if(this.enemy_spezies == 'pufferfish') {
 			return this.enemy_spezies === 'pufferfish';
 		}
 	}
 
+	/**
+	 * Checks if the character has hit a jellyfish.
+	 * @returns {boolean} True if the character has hit a jellyfish, otherwise false.
+	 * @function hitJellyfish
+	 */
 	hitJellyfish() {
 		if(this.enemy_spezies == 'jellyfish') {
 			return this.enemy_spezies === 'jellyfish';
 		}
 	}
 
+	/**
+	 * Sets the jellyfish as hitted, marking it as dead.
+	 * @function jellyfishIsHitted
+	 */
 	jellyfishIsHitted() {
 		this.jellyfishDead = true;
 	}
 
+	/**
+	 * Sets the pufferfish as hitted, marking it as dead.
+	 * @function pufferfishIsHitted
+	 */
 	pufferfishIsHitted() {
 		this.pufferfishDead = true;
 	}
 
+	/**
+	 * Checks if the character is dead.
+	 * @returns {boolean} True if the character is dead, otherwise false.
+	 * @function isDead
+	 */
 	// return true or false
 	isDead() {
 		return this.energy == 0;
 	}
 
+	/**
+	 * Marks the first contact with the end boss.
+	 * @function firstContactEndboss
+	 */
 	firstContactEndboss() {
 		this.firstContact = true;
 	}
 
+	/**
+	 * Marks the end boss as hitted.
+	 * @function endbossIsHitted
+	 */
 	endbossIsHitted() {
 		this.endbossHitted = true;
 	}
@@ -104,6 +156,10 @@ class MoveableObject extends DrawableObject {
 		this.intervalIds.push(id);
 	}
 
+	/**
+	 * Checks the difference between end boss and target coordinates, and updates end boss position.
+	 * @function checkDifferenz
+	 */
 	checkDifferenz() {
 		if(this.positionCharacterX != undefined && this.positionCharacterY != undefined) {
 			// Unterschiede zwischen Endboss- und Zielkoordinaten berechnen

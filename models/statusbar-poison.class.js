@@ -20,12 +20,22 @@ class StatusbarPoison extends DrawableObject {
 
 	}
 
+	/**
+	 * Sets the percentage of poison collected and updates the image accordingly.
+	 * @param {number} percentage - The percentage of poison collected.
+	 * @function setPercentagePoison
+	 */
 	setPercentagePoison(percentage) {
 		this.percentage = percentage;
 		let path = this.IMAGES_POISON[this.resolveImageIndex()];
 		this.img = this.imageCache[path]
 	}
 
+	/**
+	 * Resolves the index of the image based on the percentage of poison collected.
+	 * @returns {number} The index of the image in the IMAGES_POISON array.
+	 * @function resolveImageIndex
+	 */
 	resolveImageIndex() {
 		if(this.percentage == 100) {
 			return 5;

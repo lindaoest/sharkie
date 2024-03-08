@@ -20,12 +20,22 @@ class StatusbarEnergy extends DrawableObject {
 
 	}
 
+	/**
+	 * Sets the percentage of hearts collected and updates the image accordingly.
+	 * @param {number} percentage - The percentage of hearts collected.
+	 * @function setPercentageHeart
+	 */
 	setPercentageHeart(percentage) {
 		this.percentage = percentage;
 		let path = this.IMAGES_HEART[this.resolveImageIndex()];
 		this.img = this.imageCache[path]
 	}
 
+	/**
+	 * Resolves the index of the image based on the percentage of hearts collected.
+	 * @returns {number} The index of the image in the IMAGES_HEART array.
+	 * @function resolveImageIndex
+	 */
 	resolveImageIndex() {
 		if(this.percentage == 100) {
 			return 5;
