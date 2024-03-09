@@ -5,8 +5,10 @@ let time_standing;
 let sounds;
 let pauseGame = false;
 let muteAudioStorage;
+let startTheGame = false;
 
 getLocalStorage();
+startTheGame = false;
 
 /**
  * Retrieves muteAudio status from localStorage.
@@ -166,12 +168,11 @@ window.addEventListener('keyup', (event) => {
  * @function startGame
  */
 function startGame() {
+	startTheGame = true;
 	document.querySelector('.startScreen').style.display = 'none';
 	document.querySelector('.youwinScreen').style.display = 'none';
 	document.querySelector('.gameoverScreen').style.display = 'none';
-	if(window.innerWidth < 800) {
-		document.getElementById('touchbars').style.display = 'flex';
-	}
+	checkMobileTouchbars();
 	init();
 
 	getLocalStorage();
@@ -181,6 +182,25 @@ function startGame() {
 		playAudio();
 	}
 }
+
+/**
+ * Function to check the window width and display or hide the touchbars accordingly for mobile devices.
+ * @function checkMobileTouchbars
+ */
+function checkMobileTouchbars() {
+	if(window.innerWidth < 1000) {
+		document.getElementById('touchbars').style.display = 'flex';
+	} else {
+		document.getElementById('touchbars').style.display = 'none';
+	}
+}
+
+addEventListener("resize", () => {
+	if(startTheGame) {
+		checkMobileTouchbars();
+	}
+});
+
 
 /**
  * Opens fullscreen mode.
@@ -270,6 +290,7 @@ function muteAudio() {
 	playAudio.style.display = 'none';
 
 	localStorage.setItem('muteAudio', JSON.stringify(true));
+	getLocalStorage();
 }
 
 
@@ -285,6 +306,7 @@ function playAudio() {
 	playAudio.style.display = 'flex';
 
 	localStorage.setItem('muteAudio', JSON.stringify(false));
+	getLocalStorage();
 }
 
 /**
@@ -302,7 +324,9 @@ function toggleGame() {
 	if(pauseGame) {
 		world.muteAudios();
 	} else {
-		world.playAudios();
+		if(!muteAudioStorage) {
+			world.playAudios();
+		}
 	}
 }
 
