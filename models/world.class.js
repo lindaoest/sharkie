@@ -152,7 +152,7 @@ class World {
 	 * @function createBubble
 	 */
 	createBubble() {
-		if(this.keyboard.key_attack && this.character.startBubbleAttack) {
+		if(this.character.startBubbleAttack) {
 			if(this.character.bubbleOtherDirection) {
 				this.isBubbleOtherDirection();
 			} else {
@@ -230,6 +230,7 @@ class World {
 				enemy.pufferfishIsHitted();
 			}
 		}
+		enemy.hurtPufferfish = false;
 	}
 
 	/**

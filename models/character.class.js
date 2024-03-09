@@ -222,6 +222,12 @@ class Character extends MoveableObject {
 				this.playBubbleImages();
 			} else if(this.isSharkieAttackingPufferfish()) {
 				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH); //Attack Pufferfish Animation
+				let i = this.currentImage % this.IMAGES_ATTACKPUFFERFISH.length;
+				if(i == 7) {
+					setTimeout(() => {
+						this.world.keyboard.key_space = false;
+					}, 200);
+				}
 			} else {
 				this.sharkieTiredImages();
 			}
@@ -249,12 +255,14 @@ class Character extends MoveableObject {
 			let i = this.currentImage % this.IMAGES_BUBBLE.length; // Welches Bild wird gerade abgespielt?
 			if(i == 6) {
 				this.startBubbleAttack = true;
+				this.world.keyboard.key_attack = false;
 			}
 		} else {
 			this.playAnimation(this.IMAGES_BUBBLE_POISON); //Attack Jellyfish Animation
 			let i = this.currentImage % this.IMAGES_BUBBLE_POISON.length; // Welches Bild wird gerade abgespielt?
 			if(i == 6) {
 				this.startBubbleAttack = true;
+				this.world.keyboard.key_attack = false;
 			}
 		}
 	}

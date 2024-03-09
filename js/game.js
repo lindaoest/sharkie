@@ -151,15 +151,6 @@ window.addEventListener('keyup', (event) => {
 	if(event.keyCode == 38) {
 		keyboard.key_up = false;
 	}
-	if(event.keyCode == 32) {
-		keyboard.key_space = false;
-		world.level.enemies.forEach((enemy) => {
-			enemy.hurtPufferfish = false;
-		})
-	}
-	if(event.keyCode == 68) {
-		keyboard.key_attack = false;
-	}
 	time_standing = new Date().getTime();
 })
 
