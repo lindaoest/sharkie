@@ -30,25 +30,4 @@ class StatusbarCoins extends DrawableObject {
 		let path = this.IMAGES_COINS[this.resolveImageIndex()];
 		this.img = this.imageCache[path]
 	}
-
-	/**
-	 * Resolves the index of the image based on the percentage of coins collected.
-	 * @returns {number} The index of the image in the IMAGES_COINS array.
-	 * @function resolveImageIndex
-	 */
-	resolveImageIndex() {
-		if(this.percentage >= 100) {
-			return 5;
-		} else if(this.percentage >= 80) {
-			return 4;
-		} else if(this.percentage >= 60) {
-			return 3;
-		} else if(this.percentage >= 40) {
-			return 2;
-		} else if(this.percentage >= 20) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 }

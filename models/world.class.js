@@ -154,18 +154,34 @@ class World {
 	createBubble() {
 		if(this.keyboard.key_attack && this.character.startBubbleAttack) {
 			if(this.character.bubbleOtherDirection) {
-				if(this.character.poison == 0) {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
-				} else {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'otherDirection'));
-				}
+				this.isBubbleOtherDirection();
 			} else {
-				if(this.character.poison == 0) {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'normalDirection'));
-				} else {
-					this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'normalDirection'));
-				}
+				this.isBubbleNormalDirection();
 			}
+		}
+	}
+
+	/**
+	 * Function to create a bubble or poisoned bubble trap in the opposite direction of the character based on the poison state.
+	 * @function isBubbleOtherDirection
+	 */
+	isBubbleOtherDirection() {
+		if(this.character.poison == 0) {
+			this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'otherDirection'));
+		} else {
+			this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'otherDirection'));
+		}
+	}
+
+	/**
+	 * Function to create a bubble or poisoned bubble trap in the normal direction of the character based on the poison state.
+	 * @function isBubbleNormalDirection
+	 */
+	isBubbleNormalDirection() {
+		if(this.character.poison == 0) {
+			this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', false, 'normalDirection'));
+		} else {
+			this.bubble_poisons.push(new BubblePoison((this.character.position_x + this.character.width) - this.flipBubble, (this.character.position_y + this.character.height) - 90, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png', true, 'normalDirection'));
 		}
 	}
 

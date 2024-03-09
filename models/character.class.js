@@ -208,44 +208,66 @@ class Character extends MoveableObject {
 	playCharacter() {
 		this.startBubbleAttack = false;
 		if(!pauseGame) {
-			if(!this.world.sound_is_muted) {
-				sounds.electricity_audio.muted = true;
-			}
+			if(!this.world.sound_is_muted) { sounds.electricity_audio.muted = true;}
 			if(this.isDead()) {
 				this.playAnimation(this.IMAGES_DEAD); //Dead Animation
 			} else if(this.isSharkieHurtPufferfish()) {
 				this.playAnimation(this.IMAGES_HITTINGPUFFERFISH); //Hurt from Pufferfish Animation
 			} else if(this.isSharkieHurtJellyfish()) {
-				if(!this.world.sound_is_muted) {
-					sounds.electricity_audio.muted = false;
-					sounds.electricity_audio.play();
-				}
+				this.playSoundElectricity();
 				this.playAnimation(this.IMAGES_HITTINGJELLYFISH); //Hurt from Jellyfish Animation
 			} else if(this.isSharkieSwimming()) {
 				this.playAnimation(this.IMAGES_SWIMMING); //Swim Animation
 			} else if(this.isSharkieAttackingJellyfish()) {
-				if(this.poison == 0) {
-					this.playAnimation(this.IMAGES_BUBBLE);
-					let i = this.currentImage % this.IMAGES_BUBBLE.length; // Welches Bild wird gerade abgespielt?
-					if(i == 6) {
-						this.startBubbleAttack = true;
-					}
-				} else {
-					this.playAnimation(this.IMAGES_BUBBLE_POISON); //Attack Jellyfish Animation
-					let i = this.currentImage % this.IMAGES_BUBBLE_POISON.length; // Welches Bild wird gerade abgespielt?
-					if(i == 6) {
-						this.startBubbleAttack = true;
-					}
-				}
+				this.playBubbleImages();
 			} else if(this.isSharkieAttackingPufferfish()) {
 				this.playAnimation(this.IMAGES_ATTACKPUFFERFISH); //Attack Pufferfish Animation
 			} else {
-				if(this.isSharkieTired()) {
-					this.playAnimation(this.IMAGES_TIRED); //Tired Animation
-				} else {
-					this.playAnimation(this.IMAGES_STANDING); //Standing Animation
-				}
+				this.sharkieTiredImages();
 			}
+		}
+	}
+
+	/**
+	 * Function to play the electricity sound if the game sound is not muted.
+	 * @function playSoundElectricity
+	 */
+	playSoundElectricity() {
+		if(!this.world.sound_is_muted) {
+			sounds.electricity_audio.muted = false;
+			sounds.electricity_audio.play();
+		}
+	}
+
+	/**
+	 * Function to play bubble images based on the game conditions, and trigger bubble attack if certain conditions are met.
+	 * @function playBubbleImages
+	 */
+	playBubbleImages() {
+		if(this.poison == 0) {
+			this.playAnimation(this.IMAGES_BUBBLE);
+			let i = this.currentImage % this.IMAGES_BUBBLE.length; // Welches Bild wird gerade abgespielt?
+			if(i == 6) {
+				this.startBubbleAttack = true;
+			}
+		} else {
+			this.playAnimation(this.IMAGES_BUBBLE_POISON); //Attack Jellyfish Animation
+			let i = this.currentImage % this.IMAGES_BUBBLE_POISON.length; // Welches Bild wird gerade abgespielt?
+			if(i == 6) {
+				this.startBubbleAttack = true;
+			}
+		}
+	}
+
+	/**
+	 * Function to play tired or standing images for Sharkie based on its tired state.
+	 * @function sharkieTiredImages
+	 */
+	sharkieTiredImages() {
+		if(this.isSharkieTired()) {
+			this.playAnimation(this.IMAGES_TIRED); //Tired Animation
+		} else {
+			this.playAnimation(this.IMAGES_STANDING); //Standing Animation
 		}
 	}
 

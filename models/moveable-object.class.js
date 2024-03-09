@@ -46,10 +46,10 @@ class MoveableObject extends DrawableObject {
 	// this.character.isColliding(this.pufferfish)
 	//Berechnung ob sich die Rechtecke vom Character und den Enemies sich überkreuzen
 	isColliding (obj) {
-		return  (this.position_x + this.width) - this.offset.right >= obj.position_x &&
-				this.position_x + this.offset.left <= (obj.position_x + obj.width) &&
-				(this.position_y + this.height)  - this.offset.bottom >= obj.position_y &&
-				this.position_y + this.offset.top <= (obj.position_y + obj.height) //&&
+		return  (this.position_x + this.width) - this.offset.right >= obj.position_x + obj.offset.left &&
+				this.position_x + this.offset.left <= (obj.position_x + obj.width) - obj.offset.right &&
+				(this.position_y + this.height)  - this.offset.bottom >= obj.position_y + obj.offset.top &&
+				this.position_y + this.offset.top <= (obj.position_y + obj.height) - obj.offset.bottom //&&
 				//obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
 	}
