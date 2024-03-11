@@ -129,7 +129,7 @@ class Character extends MoveableObject {
 	*/
 	animate() {
 		setInterval(() => this.moveCharacter(), 1000 / 60);
-		setInterval(() => this.playCharacter(), 200);
+		setInterval(() => this.playCharacter(), 150);
 	}
 
 	/**

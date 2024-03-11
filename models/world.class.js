@@ -144,7 +144,7 @@ class World {
 	 * @function checkAttacks
 	 */
 	checkAttacks() {
-		setInterval(() => this.createBubble(), 200);
+		setInterval(() => this.createBubble(), 150);
 	}
 
 	/**

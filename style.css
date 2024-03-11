@@ -183,10 +183,10 @@ canvas {
 }
 .touchbars {
 	position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 0;
 	display: none;
-	width: 80%;
+	width: 70%;
 }
 .touchbars > * {
 	width: 40px;
@@ -223,7 +223,7 @@ canvas {
 	}
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 800px), (max-height: 360px) {
 	.menu {
 		flex-direction: row;
     	width: auto;
@@ -247,7 +247,7 @@ canvas {
 	}
 }
 
-@media screen and (max-height: 480px) {
+@media screen and (max-height: 580px) {
 	h1 {
 		display: none;
 	}

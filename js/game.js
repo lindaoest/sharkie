@@ -94,19 +94,10 @@ function mobileTouchEvents() {
 		keyboard.key_attack = true;
 	})
 
-	document.getElementById('btnD').addEventListener('touchend', (e) => {
-		e.preventDefault();
-		keyboard.key_attack = false;
-	})
-
 	document.getElementById('btnSpace').addEventListener('touchstart', (e) => {
 		e.preventDefault();
 		keyboard.key_space = true;
-	})
-
-	document.getElementById('btnSpace').addEventListener('touchend', (e) => {
-		e.preventDefault();
-		keyboard.key_space = false;
+		hurtPufferfishIsTrue();
 	})
 }
 
@@ -125,9 +116,7 @@ window.addEventListener('keydown', (event) => {
 	}
 	if(event.keyCode == 32) {
 		keyboard.key_space = true;
-		world.level.enemies.forEach((enemy) => {
-			enemy.hurtPufferfish = true;
-		})
+		hurtPufferfishIsTrue();
 	}
 	if(event.keyCode == 68) {
 		keyboard.key_attack = true;
@@ -153,6 +142,12 @@ window.addEventListener('keyup', (event) => {
 	}
 	time_standing = new Date().getTime();
 })
+
+function hurtPufferfishIsTrue() {
+	world.level.enemies.forEach((enemy) => {
+		enemy.hurtPufferfish = true;
+	})
+}
 
 /**
  * Initializes the game when started.
